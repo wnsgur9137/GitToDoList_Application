@@ -1,0 +1,28 @@
+PODS:
+  - Alamofire (5.6.2)
+  - FSCalendar (2.8.4)
+  - Kingfisher (7.3.2)
+  - SwiftSoup (2.4.3)
+
+DEPENDENCIES:
+  - Alamofire
+  - FSCalendar
+  - Kingfisher
+  - SwiftSoup
+
+SPEC REPOS:
+  trunk:
+    - Alamofire
+    - FSCalendar
+    - Kingfisher
+    - SwiftSoup
+
+SPEC CHECKSUMS:
+  Alamofire: d368e1ff8a298e6dde360e35a3e68e6c610e7204
+  FSCalendar: 2d1d0d9398f12d439f55c1fe0f01525b151b8260
+  Kingfisher: 0086ad83719761ba9b2cdaf6ef4d5b4878cbae23
+  SwiftSoup: 3384f2e618cfc1b3cbc7852c16692fe8de13fb8f
+
+PODFILE CHECKSUM: b95c96515e3b60c9a8c1b7479794580851eec174
+
+COCOAPODS: 1.11.3
