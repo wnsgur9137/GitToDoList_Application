@@ -9,6 +9,7 @@ import Foundation
 
 struct APIKeys {
     static let githubAPI = "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"
+    static let token = "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"
 }
 
 struct imageData {

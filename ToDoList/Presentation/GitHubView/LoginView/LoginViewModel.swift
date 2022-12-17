@@ -55,8 +55,34 @@ class LoginViewModel: ObservableObject {
                 case .success(let json):
                     do {
                         let result = try JSONDecoder().decode(UserTokenOverview.self, from: json!)
-                        print("UserInfoJson: \(result)")
-                        self?.getUserInfo()
+                        let accessToken = result.accessToken
+                        KeychainSwift().set(accessToken, forKey: "accessToken")
+                        print("UserTokenJson: \(result)")
+                        
+                        
+                        let url = "https://api.github.com/user"
+                        let headers: HTTPHeaders = [
+                            "Accept": "application/vnd.github.v3+json",
+//                            "Authorization": "token \(accessToken)"
+                            "Authorization": "token \(APIKeys.token)"
+                        ]
+                        AF.request(url, method: .get, parameters: [:], headers: headers)
+                            .response(completionHandler: { (response) in
+                                switch response.result {
+                                case .success(let json):
+                                    do {
+                                        let result = try JSONDecoder().decode(UserInfoOverview.self, from: json!)
+                                        print("UserInfoJson: \(result)")
+                                        UserDefaults.standard.set(result.userId, forKey: "userID")
+                                    } catch {
+                                        print("getUserInfo JSON Parsing Error")
+                                    }
+                                case .failure(let error):
+                                    print("getUserInfo JSON Error: \(error)")
+                                }
+
+                            })
+                        
                     } catch {
                         print("requestAccessToken Error:")
                     }
@@ -80,8 +106,10 @@ class LoginViewModel: ObservableObject {
     }
     
     func getUserInfo() {
+        print("123123123")
         let url = "https://api.github.com/user"
-        let accessToken = KeychainSwift().get("accessToekn") ?? ""
+        let accessToken = KeychainSwift().get("accessToken") ?? ""
+        print(accessToken)
         let headers: HTTPHeaders = [
             "Accept": "application/vnd.github.v3+json",
             "Authorization": "token \(accessToken)"
@@ -93,13 +121,14 @@ class LoginViewModel: ObservableObject {
                     do {
                         let result = try JSONDecoder().decode(UserInfoOverview.self, from: json!)
                         print("UserInfoJson: \(result)")
+                        UserDefaults.standard.set(result.userId, forKey: "userID")
                     } catch {
                         print("getUserInfo JSON Parsing Error")
                     }
                 case .failure(let error):
                     print("getUserInfo JSON Error: \(error)")
                 }
-                
+
             })
 //            .responseJSON(completionHandler: { (response) in
 //                switch response.result {
@@ -109,9 +138,5 @@ class LoginViewModel: ObservableObject {
 //                    print("getUserInfo JSON Error")
 //                }
 //            })
-    }
-    
-    func logout() {
-        KeychainSwift().clear()
     }
 }

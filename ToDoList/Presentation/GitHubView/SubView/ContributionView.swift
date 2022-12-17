@@ -25,44 +25,45 @@ struct ContributionView: View {
     }
     
     var body: some View {
-        ZStack {
-            VStack (alignment: .leading, spacing: 5) {
-                Text("Contribution")
-                    .font(.system(size: 18, weight: .bold))
-                HStack(){}
-                .modifier(CardModifier(height: 150))
-            }
-            VStack (alignment: .leading, spacing: 5) {
-                Text("Hidden")
-                    .font(.system(size: 18, weight: .bold))
-                    .hidden()
-                ScrollView (.horizontal) {
-                    ScrollViewReader { scroll in
-                        HStack (alignment: .top, spacing: 3) {
-                            ForEach (0..<52, id: \.self) { col in
-                                VStack (spacing: 3) {
-                                    ForEach (0..<7, id: \.self) { row in
-                                        ColorView(userService.commits[col * 7 + row].level)
-                                    }
-                                }
-                            }
-                            VStack (spacing: 3) {
-                                ForEach(364..<userService.commits.count, id: \.self) { cell in
-                                    ColorView(userService.commits[cell].level)
-                                }
-                            }
-                            .id(end)
-                        }
-                        .onAppear {
-                            scroll.scrollTo(end)
-                        }
-                        .cornerRadius(4)
-                    }
-                }
-                .frame(width: width, height: 100)
-            }
-        }
-        .padding(.top, 15)
+        Text("ContributionView")
+//        ZStack {
+//            VStack (alignment: .leading, spacing: 5) {
+//                Text("Contribution")
+//                    .font(.system(size: 18, weight: .bold))
+//                HStack(){}
+//                .modifier(CardModifier(height: 150))
+//            }
+//            VStack (alignment: .leading, spacing: 5) {
+//                Text("Hidden")
+//                    .font(.system(size: 18, weight: .bold))
+//                    .hidden()
+//                ScrollView (.horizontal) {
+//                    ScrollViewReader { scroll in
+//                        HStack (alignment: .top, spacing: 3) {
+//                            ForEach (0..<52, id: \.self) { col in
+//                                VStack (spacing: 3) {
+//                                    ForEach (0..<7, id: \.self) { row in
+//                                        ColorView(userService.commits[col * 7 + row].level)
+//                                    }
+//                                }
+//                            }
+//                            VStack (spacing: 3) {
+//                                ForEach(364..<userService.commits.count, id: \.self) { cell in
+//                                    ColorView(userService.commits[cell].level)
+//                                }
+//                            }
+//                            .id(end)
+//                        }
+//                        .onAppear {
+//                            scroll.scrollTo(end)
+//                        }
+//                        .cornerRadius(4)
+//                    }
+//                }
+//                .frame(width: width, height: 100)
+//            }
+//        }
+//        .padding(.top, 15)
     }
 }
 

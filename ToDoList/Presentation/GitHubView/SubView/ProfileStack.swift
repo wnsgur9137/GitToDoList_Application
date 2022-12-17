@@ -9,6 +9,9 @@ import SwiftUI
 
 struct ProfileStack: View {
     
+    @Binding var reflash: Int
+    
+    let userService = UserService()
     
     var body: some View {
         VStack(alignment: .leading, spacing: 10.0) {
@@ -30,6 +33,8 @@ struct ProfileStack: View {
                     Text("GitHub 닉네임")
                         .frame(width: 210.0, alignment: .leading)
                     Button("로그아웃") {
+                        userService.logout()
+                        reflash += 1
                         print("Logout")
                     }
                 }
@@ -44,6 +49,7 @@ struct ProfileStack: View {
 
 struct ProfileStack_Previews: PreviewProvider {
     static var previews: some View {
-        ProfileStack()
+        let githubview = GitHubView()
+        ProfileStack(reflash: githubview.$reflash)
     }
 }

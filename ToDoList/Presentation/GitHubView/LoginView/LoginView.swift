@@ -9,6 +9,8 @@ import SwiftUI
 
 struct LoginView: View {
     
+    @Binding var reflash: Int
+    
     @ObservedObject var loginViewModel = LoginViewModel()
     
     private var logoImage: some View {
@@ -45,6 +47,10 @@ struct LoginView: View {
             .onOpenURL(perform: { url in
                 let code = url.absoluteString.components(separatedBy: "code=").last ?? ""
                 loginViewModel.requestAccessToken(with: code)
+                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1) {
+                    reflash += 1
+                }
+                
             })
             .font(.system(size:20))
             .padding()
@@ -77,8 +83,8 @@ struct LoginView: View {
     }
 }
 
-struct LoginView_Previews: PreviewProvider {
-    static var previews: some View {
-        LoginView()
-    }
-}
+//struct LoginView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        LoginView()
+//    }
+//}

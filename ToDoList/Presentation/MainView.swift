@@ -23,12 +23,13 @@ struct MainView: View {
     func getTabView(type: TabType) -> some View {
         switch type {
         case .github:
-            let userID = UserDefaults.standard.string(forKey: "userID") ?? ""
-            if userID == "" {
-                LoginView()
-            } else {
-                GitHubView()
-            }
+            GitHubView()
+//            let userID = UserDefaults.standard.string(forKey: "userID") ?? ""
+//            if userID == "" {
+//                LoginView(reflash: self.$reflash)
+//            } else {
+//                GitHubView()
+//            }
         case .toDoList:
             CalendarView()
         case .alarm:
@@ -40,5 +41,15 @@ struct MainView: View {
 struct MainView_Previews: PreviewProvider {
     static var previews: some View {
         MainView()
+    }
+}
+
+extension ShapeStyle where Self == Color {
+    static var random: Color {
+        Color(
+            red: .random(in: 0...1),
+            green: .random(in: 0...1),
+            blue: .random(in: 0...1)
+        )
     }
 }
