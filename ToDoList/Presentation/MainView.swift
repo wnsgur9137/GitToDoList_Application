@@ -10,6 +10,7 @@ import SwiftUI
 struct MainView: View {
     
     @State var selectedIndex: Int = 0
+//    @ObservedObject var userService: UserService = UserService()
     
     var body: some View {
         CustomTabView(tabs: TabType.allCases.map({ $0.tabItem }), selectedIndex: $selectedIndex) { index in
@@ -22,7 +23,12 @@ struct MainView: View {
     func getTabView(type: TabType) -> some View {
         switch type {
         case .github:
-            GitHubView()
+            let userID = UserDefaults.standard.string(forKey: "userID") ?? ""
+            if userID == "" {
+                LoginView()
+            } else {
+                GitHubView()
+            }
         case .toDoList:
             CalendarView()
         case .alarm:

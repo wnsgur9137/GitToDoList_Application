@@ -6,3 +6,10 @@
 //
 
 import Foundation
+import Combine
+import SwiftUI
+import SwiftSoup
+
+class GitHubViewModel: ObservableObject {
+    
+}

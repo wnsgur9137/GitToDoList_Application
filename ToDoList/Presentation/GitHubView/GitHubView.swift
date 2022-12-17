@@ -25,7 +25,7 @@ struct GitHubView: View {
                         )
                     
                     ChallengeStack()
-                    ContributionView()
+//                    ContributionView()
                     
                 } // VStack
                 .navigationTitle("GitHub")

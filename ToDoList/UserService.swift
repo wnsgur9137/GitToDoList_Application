@@ -19,7 +19,8 @@ class UserService: ObservableObject {
     var hasCommitted: Int = emoji.notCommitted.rawValue
     
     init() {
-        self.userID = UserDefaults.shared.string(forKey: "userID") ?? ""
+//        self.userID = UserDefaults.standard.string(forKey: "userID") ?? ""
+        self.userID = "wnsgur9137"
         self.baseURL = "http://github.com/users/\(userID)/contributions"
         getCommitData()
     }
@@ -30,31 +31,31 @@ class UserService: ObservableObject {
             do {
                 let html = try String(contentsOf: url, encoding: .utf8)
                 let parsedHtml = try SwiftSoup.parse(html)
-                let dailyContributoion = try parsedHtml.select("rect")
+                let dailyContribution = try parsedHtml.select("rect")
                 
                 commits = dailyContribution
                     .compactMap({ element -> (String, String) in
                         guard
-                            let dataString = try? element.attr("data-data"),
+                            let dateString = try? element.attr("data-date"),
                             let levelString = try? element.attr("data-level")
                         else { return ("", "") }
                         
-                        return (dataString, levelString)
+                        return (dateString, levelString)
                     })
                     .filter{ $0.0.isEmpty == false }
-                    .compactMap({ (dataString, levelString) -> Commit in
-                        let date = dataString.toDate() ?? Date()
+                    .compactMap({ (dateString, levelString) -> Commit in
+                        let date = dateString.toDate() ?? Date()
                         let level = Int(levelString) ?? 0
                         
                         return Commit(date: date, level: level)
                     })
                 
                 if commits.last!.date.isToday && commits.last!.level > 0 {
-                    self.hasCommitted = emoji.commited.rawValue
+                    self.hasCommitted = emoji.committed.rawValue
                 }
             }
             catch {
-                FatalError("Cannot Get Data: \(error.localizedDescription)")
+                fatalError("Cannot Get Data: \(error.localizedDescription)")
             }
         }
     }
