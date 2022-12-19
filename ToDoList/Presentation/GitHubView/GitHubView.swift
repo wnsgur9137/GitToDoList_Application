@@ -10,6 +10,8 @@ import SwiftUI
 struct GitHubView: View {
     @State var reflash: Int = 0
     
+    @EnvironmentObject var userService: UserService
+    
     var body: some View {
         
         let userID = UserDefaults.standard.string(forKey: "userID") ?? ""
@@ -24,12 +26,8 @@ struct GitHubView: View {
         } else {
             NavigationView {
                 ScrollView {
-                    Text("userID: \(userID)")
-                        .hidden()
-                    Text("reflash: \(reflash)")
-                        .hidden()
                     VStack(alignment: .center, spacing: 50.0) {
-                        ProfileStack(reflash: self.$reflash)
+                        ProfileStack()
                             .frame(
                                 minWidth: 400.0, maxWidth: .infinity,
                                 minHeight: 160.0, maxHeight: 180.0
@@ -42,7 +40,29 @@ struct GitHubView: View {
                             )
                         
                         ChallengeStack()
+                        
     //                    ContributionView()
+                        
+                        InformationView()
+                            .frame(
+                                minWidth: 400.0, maxWidth: .infinity,
+                                minHeight: 160.0, maxHeight: 300.0
+                            )
+                        
+                        Button("로그아웃") {
+                            userService.logout()
+                            reflash += 1
+                            print("Logout")
+                        }
+                        .accentColor(.red)
+                        .font(.headline)
+                        .padding(8.0)
+                        .overlay(Capsule().stroke(Color.red))
+                        
+                        Text("userID: \(userID)")
+                            .hidden()
+                        Text("reflash: \(reflash)")
+                            .hidden()
                         
                     } // VStack
                     .navigationTitle("GitHub")

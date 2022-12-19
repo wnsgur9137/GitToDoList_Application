@@ -10,13 +10,14 @@ import SwiftUI
 struct MainView: View {
     
     @State var selectedIndex: Int = 0
-//    @ObservedObject var userService: UserService = UserService()
+    @EnvironmentObject var userService: UserService
     
     var body: some View {
         CustomTabView(tabs: TabType.allCases.map({ $0.tabItem }), selectedIndex: $selectedIndex) { index in
             let type = TabType(rawValue: index) ?? .toDoList
             getTabView(type: type)
         }
+//        .environmentObject(userService)
     }
     
     @ViewBuilder

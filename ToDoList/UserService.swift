@@ -8,16 +8,18 @@
 import Foundation
 import SwiftUI
 import SwiftSoup
-import WidgetKit
+//import WidgetKit
 import KeychainSwift
+import Alamofire
 
 class UserService: ObservableObject {
     
-    @ObservedObject var loginViewModel: LoginViewModel = LoginViewModel()
     @Published var isLogin: Bool = false
+    @Published var userInfo: UserInfoOverview = UserInfoOverview(userId: "", name: "", avatarUrl: "", company: "", type: "", blog: "https://github.com", location: "", email: "", hireable: "", bio: "", twitterUsername: "", publicRepos: 0, publicGists: 0, followers: 0, following: 0, plan: Plan(plan: "", space: 0, collaborators: 0, privateRepos: 0), id: 0, url: "", htmlUrl: "", followersUrl: "", followingUrl: "", gistsUrl: "", subscriptionsUrl: "")
     
     private let userID: String
     private let baseURL: String
+    private let accessToken: String
     
     func logout() {
         print("userService: LogOut")
@@ -28,6 +30,42 @@ class UserService: ObservableObject {
     init() {
         self.userID = UserDefaults.standard.string(forKey: "userID") ?? ""
         self.baseURL = "http://github.com/users/\(userID)/contributions"
+//        self.accessToken = KeychainSwift().get("accessToken") ?? "없음"
+        self.accessToken = UserDefaults.standard.string(forKey: "accessToken") ?? ""
+        self.getUserInfo()
+    }
+    
+    func getUserInfo() {
+        let url = "https://api.github.com/user"
+        let headers: HTTPHeaders = [
+            "Accept": "application/vnd.github.v3+json",
+            "Authorization": "token \(accessToken)"
+//                            "Authorization": "token \(APIKeys.token)"
+        ]
+        AF.request(url, method: .get, parameters: [:], headers: headers)
+            .response(completionHandler: { [weak self] (response) in
+                switch response.result {
+                case .success(let json):
+                    do {
+                        let result = try JSONDecoder().decode(UserInfoOverview.self, from: json!)
+                        print("UserInfoJson: \(result)")
+                        self?.userInfo = result
+                    } catch {
+                        print("UserService: getUserInfo JSON Parsing Error")
+                    }
+                case .failure(let error):
+                    print("UserService: getUserInfo JSON Error: \(error)")
+                }
+
+            })
+//            .responseJSON(completionHandler: { (response) in
+//                switch response.result {
+//                case .success(let json):
+//                    print(json as! [String: Any])
+//                case .failure:
+//                    print("getUserInfo JSON Error")
+//                }
+//            })
     }
     
 }

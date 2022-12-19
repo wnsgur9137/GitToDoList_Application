@@ -6,37 +6,38 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 struct ProfileStack: View {
     
-    @Binding var reflash: Int
-    
-    let userService = UserService()
+    @EnvironmentObject var userService: UserService
     
     var body: some View {
         VStack(alignment: .leading, spacing: 10.0) {
-            Text("깃허브 닉네임")
+            let userName = UserDefaults.standard.string(forKey: "userID")
+            
+            Text("\(userName ?? "알 수 없음")님")
                 .font(.headline)
                 .fontDesign(.rounded)
-                .padding(EdgeInsets(top: 0.0, leading: 12.0, bottom: 12.0, trailing: 0.0))
+                .padding(EdgeInsets(top: 0.0, leading: 12.0, bottom: 0.0, trailing: 0.0))
             
             HStack(alignment: .center, spacing: 30.0) {
-                Image(systemName: "person")
+                KFImage(URL(string:userService.userInfo.avatarUrl!))
                     .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: 50.0, height: 50.0)
-                    .padding()
-//                    .clipShape(Circle())
-//                    .border(.blue)
+                    .aspectRatio(contentMode: .fill)
+                    .frame(width: 100.0, height: 100.0)
+                    .cornerRadius(50.0)
                 
                 VStack(alignment: .leading, spacing: 10.0) {
-                    Text("GitHub 닉네임")
+                    Text("\(userService.userInfo.name)")
                         .frame(width: 210.0, alignment: .leading)
-                    Button("로그아웃") {
-                        userService.logout()
-                        reflash += 1
-                        print("Logout")
-                    }
+                        .font(.headline)
+                    Text("\(userService.userInfo.email ?? "등록된 이메일이 없어요.")")
+                        .frame(width: 210.0, alignment: .leading)
+                    Text("오늘 커밋을 완료했어요!")
+                        .foregroundColor(.green)
+                    Text("오늘 커밋을 하지 않았어요!")
+                        .foregroundColor(.red)
                 }
             }
         }
@@ -49,7 +50,6 @@ struct ProfileStack: View {
 
 struct ProfileStack_Previews: PreviewProvider {
     static var previews: some View {
-        let githubview = GitHubView()
-        ProfileStack(reflash: githubview.$reflash)
+        ProfileStack()
     }
 }

@@ -10,6 +10,7 @@ import Foundation
 struct UserInfoOverview: Decodable {
     let userId: String
     let name: String
+    let avatarUrl: String?
     let company: String?
     let type: String
     let blog: String?
@@ -34,7 +35,9 @@ struct UserInfoOverview: Decodable {
     
     enum CodingKeys: String, CodingKey {
         case userId = "login"
-        case name, company, type, blog, location, email, hireable, bio
+        case name
+        case avatarUrl = "avatar_url"
+        case company, type, blog, location, email, hireable, bio
         case twitterUsername = "twitter_username"
         case publicRepos = "public_repos"
         case publicGists = "public_gists"
