@@ -13,6 +13,7 @@ struct ToDoListApp: App {
         WindowGroup {
             MainView()
                 .environmentObject(UserService())
+                .environmentObject(LoadingService())
         }
     }
 }

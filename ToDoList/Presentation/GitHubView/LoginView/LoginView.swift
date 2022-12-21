@@ -9,9 +9,13 @@ import SwiftUI
 
 struct LoginView: View {
     
+    @State private var loadingIndicator: Bool = false
+    @State private var loadingAmount: Float = 0.0
     @Binding var reflash: Int
-    
     @ObservedObject var loginViewModel = LoginViewModel()
+    @EnvironmentObject var loadingService: LoadingService
+    
+    private let timer = Timer.publish(every: 0.1, on: .main, in: .common).autoconnect()
     
     private var logoImage: some View {
         Image(systemName: "apple.logo")
@@ -45,13 +49,23 @@ struct LoginView: View {
                 Text("GitHub Login")
             }
             .onOpenURL(perform: { url in
+                self.loadingIndicator = true
                 let code = url.absoluteString.components(separatedBy: "code=").last ?? ""
                 loginViewModel.requestAccessToken(with: code)
-                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1) {
-                    reflash += 1
+                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 3) {
+                    loadingService.isLoading = true
+                    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5) {
+                        reflash += 1
+                        self.loadingIndicator = false
+                    }
                 }
-                
             })
+            .onReceive(self.timer) { _ in
+                if (self.loadingIndicator) && (loadingAmount < 100) {
+                    loadingAmount += 5
+                }
+            }
+            
             .font(.system(size:20))
             .padding()
             .foregroundColor(.white)
@@ -61,24 +75,33 @@ struct LoginView: View {
     }
     
     var body: some View {
-        VStack(alignment: .center) {
-            
-            Spacer()
-            
-            VStack(alignment: .center, spacing: 40.0) {
-                logoImage
-                logoLabel
+        ZStack {
+            if loadingIndicator {
+                ProgressView("유저 정보 확인중...", value: loadingAmount, total: 100)
+                    .backgroundStyle(Color("SubViewBackground"))
+                    .shadow(color: Color("ShadowColor"), radius: 1, x: 1, y: 1)
+                    .frame(maxWidth: 250)
             }
-            
-            Spacer()
-            
-            VStack(alignment: .center, spacing: 40.0) {
-                contentLabel
-                loginButton
+            VStack(alignment: .center) {
+                
+                Spacer()
+                
+                VStack(alignment: .center, spacing: 40.0) {
+                    logoImage
+                    logoLabel
+                }
+                
+                Spacer()
+                
+                VStack(alignment: .center, spacing: 40.0) {
+                    contentLabel
+                    loginButton
+                        .disabled(self.loadingIndicator)
+                }
+                
+                Spacer()
+                    .frame(height: 100)
             }
-            
-            Spacer()
-                .frame(height: 100)
         }
     }
 }

@@ -14,9 +14,8 @@ struct ProfileStack: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 10.0) {
-            let userName = UserDefaults.standard.string(forKey: "userID")
             
-            Text("\(userName ?? "알 수 없음")님")
+            Text("\(userService.userInfo.name)님")
                 .font(.headline)
                 .fontDesign(.rounded)
                 .padding(EdgeInsets(top: 0.0, leading: 12.0, bottom: 0.0, trailing: 0.0))
@@ -32,7 +31,7 @@ struct ProfileStack: View {
                     Text("\(userService.userInfo.name)")
                         .frame(width: 210.0, alignment: .leading)
                         .font(.headline)
-                    Text("\(userService.userInfo.email ?? "등록된 이메일이 없어요.")")
+                    Text("\(userService.userInfo.email ?? "등록된 이메일이 없어요")")
                         .frame(width: 210.0, alignment: .leading)
                     Text("오늘 커밋을 완료했어요!")
                         .foregroundColor(.green)
@@ -42,9 +41,9 @@ struct ProfileStack: View {
             }
         }
         .padding(20.0)
-        .background(Color.white)
+        .background(Color("SubViewBackground"))
         .cornerRadius(16.0)
-        .shadow(color: .gray, radius: 5, x: 5.0, y:5.0)
+        .shadow(color: Color("ShadowColor"), radius: 5, x: 5.0, y:5.0)
     }
 }
 

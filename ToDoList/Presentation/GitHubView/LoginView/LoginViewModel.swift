@@ -13,7 +13,7 @@ import KeychainSwift
 
 class LoginViewModel: ObservableObject {
     
-    @Published var githubname: String = "깃허브 닉네임"
+    @Published var accessToken: String = ""
     
     let clientID = GitHub.clientID
     let secret = GitHub.secrets
@@ -58,9 +58,10 @@ class LoginViewModel: ObservableObject {
                     do {
                         let result = try JSONDecoder().decode(UserTokenOverview.self, from: json!)
                         let accessToken = result.accessToken
-                        KeychainSwift().set(accessToken, forKey: "accessToken")
                         UserDefaults.standard.set(accessToken, forKey: "accessToken")
-                        print("KeychainSwift: \(KeychainSwift().get("accessToken") ?? "없음")")
+                        self?.accessToken = accessToken
+                        UserDefaults.standard.set(accessToken, forKey: "userID")
+                        KeychainSwift().set(accessToken, forKey: "accessToken")
                         
                         
                         let url = "https://api.github.com/user"
@@ -75,7 +76,6 @@ class LoginViewModel: ObservableObject {
                                 case .success(let json):
                                     do {
                                         let result = try JSONDecoder().decode(UserInfoOverview.self, from: json!)
-                                        print("UserInfoJson: \(result)")
                                         UserDefaults.standard.set(result.userId, forKey: "userID")
                                     } catch {
                                         print("getUserInfo JSON Parsing Error")

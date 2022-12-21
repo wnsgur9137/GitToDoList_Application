@@ -14,12 +14,43 @@ import Alamofire
 
 class UserService: ObservableObject {
     
-    @Published var isLogin: Bool = false
-    @Published var userInfo: UserInfoOverview = UserInfoOverview(userId: "", name: "", avatarUrl: "", company: "", type: "", blog: "https://github.com", location: "", email: "", hireable: "", bio: "", twitterUsername: "", publicRepos: 0, publicGists: 0, followers: 0, following: 0, plan: Plan(plan: "", space: 0, collaborators: 0, privateRepos: 0), id: 0, url: "", htmlUrl: "", followersUrl: "", followingUrl: "", gistsUrl: "", subscriptionsUrl: "")
+    @EnvironmentObject var loadingService: LoadingService
+    @ObservedObject var loginViewModelAccessToken: LoginViewModel = LoginViewModel()
     
-    private let userID: String
+    @Published var isLogin: Bool = false
+    @Published var userInfo: UserInfoOverview = UserInfoOverview(
+        userId: "알 수 없어요",
+        name: "등록된 이름이 없어요",
+        avatarUrl: "",
+        company: "",
+        type: "User",
+        blog: "블로그가 없어요",
+        location: "",
+        email: "등록된 이메일이 없어요",
+        hireable: "",
+        bio: "",
+        twitterUsername: "연동된 트위터 계정이 없어요",
+        publicRepos: 0,
+        publicGists: 0,
+        followers: 0,
+        following: 0,
+        plan: Plan(
+            plan: "",
+            space: 0,
+            collaborators: 0,
+            privateRepos: 0),
+        id: 0,
+        url: "",
+        htmlUrl: "",
+        followersUrl: "",
+        followingUrl: "",
+        gistsUrl: "",
+        subscriptionsUrl: ""
+    )
+    
+    private var userID: String
     private let baseURL: String
-    private let accessToken: String
+    private var accessToken: String
     
     func logout() {
         print("userService: LogOut")
@@ -32,10 +63,13 @@ class UserService: ObservableObject {
         self.baseURL = "http://github.com/users/\(userID)/contributions"
 //        self.accessToken = KeychainSwift().get("accessToken") ?? "없음"
         self.accessToken = UserDefaults.standard.string(forKey: "accessToken") ?? ""
-        self.getUserInfo()
+//        self.getUserInfo()
     }
     
     func getUserInfo() {
+        self.userID = UserDefaults.standard.string(forKey: "userID") ?? ""
+        self.accessToken = UserDefaults.standard.string(forKey: "accessToken") ?? ""
+        print("(UserService) userID: \(userID)")
         let url = "https://api.github.com/user"
         let headers: HTTPHeaders = [
             "Accept": "application/vnd.github.v3+json",
@@ -48,7 +82,6 @@ class UserService: ObservableObject {
                 case .success(let json):
                     do {
                         let result = try JSONDecoder().decode(UserInfoOverview.self, from: json!)
-                        print("UserInfoJson: \(result)")
                         self?.userInfo = result
                     } catch {
                         print("UserService: getUserInfo JSON Parsing Error")
@@ -58,14 +91,33 @@ class UserService: ObservableObject {
                 }
 
             })
-//            .responseJSON(completionHandler: { (response) in
-//                switch response.result {
-//                case .success(let json):
-//                    print(json as! [String: Any])
-//                case .failure:
-//                    print("getUserInfo JSON Error")
-//                }
-//            })
+    }
+    
+    func getCommitData() {
+        self.userID = UserDefaults.standard.string(forKey: "userID") ?? ""
+        Task{@MainActor in
+            do {
+//                let urlAddress = "https://github.com/users/\(self.userID)/contributions"
+//                let className = ".js-calendar-graph mx-md-2 mx-3 d-flex flex-column flex-items-end flex-xl-items-center overflow-hidden pt-1 is-graph-loading graph-canvas ContributionCalendar height-full text-center"
+                
+                let urlAddress = "https://ghchart.rshah.org/\(self.userID)"
+                guard let url = URL(string: urlAddress) else { return }
+                
+                let html = try String(contentsOf: url, encoding: .utf8)
+                
+                //            let html = try String(contentsOf: url, encoding: .utf8)
+                let doc: Document = try SwiftSoup.parse(html)
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "YYYY-MM-dd"
+                let today = dateFormatter.string(from: Date())
+                print("today: \(today)")
+                let commitData: Elements = try doc.select(".f4 text-normal mb-2")
+                print(try commitData.text())
+                
+            } catch let error {
+                print("getCommitData Error: \(error)")
+            }
+        }
     }
     
 }

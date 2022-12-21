@@ -9,13 +9,18 @@ import SwiftUI
 
 struct GitHubView: View {
     @State var reflash: Int = 0
+    @State var accessToken: String = ""
     
     @EnvironmentObject var userService: UserService
+    @EnvironmentObject var loadingService: LoadingService
+    @ObservedObject var accessTokenObject: LoginViewModel = LoginViewModel()
     
     var body: some View {
         
+//        let userID = UserDefaults.standard.string(forKey: "accessToken") ?? ""
         let userID = UserDefaults.standard.string(forKey: "userID") ?? ""
-        if userID == "" {
+        let loading = loadingService.isLoading
+        if loading == false {
             VStack {
                 Text("reflash: \(reflash)")
                     .hidden()
@@ -50,6 +55,7 @@ struct GitHubView: View {
                             )
                         
                         Button("로그아웃") {
+                            loadingService.isLoading = false
                             userService.logout()
                             reflash += 1
                             print("Logout")
@@ -70,6 +76,11 @@ struct GitHubView: View {
     //            .background(Color.green)
                 .background(LinearGradient(gradient: Gradient(colors: [Color("BackgroundColor1"), Color("BackgroundColor2")]), startPoint: .top, endPoint: .bottom))
             } // NavigationView
+            .onAppear {
+                userService.getUserInfo()
+                userService.getCommitData()
+                reflash+=1
+            }
         }
         
         

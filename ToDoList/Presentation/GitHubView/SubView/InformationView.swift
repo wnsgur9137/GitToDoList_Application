@@ -57,9 +57,9 @@ struct InformationView: View {
             }
         }
         .padding(EdgeInsets(top: 20.0, leading: 30.0, bottom: 20.0, trailing: 30.0))
-        .background(Color.white)
+        .background(Color("SubViewBackground"))
         .cornerRadius(16.0)
-        .shadow(color: .gray, radius: 5, x: 5.0, y:5.0)
+        .shadow(color: Color("ShadowColor"), radius: 5, x: 5.0, y:5.0)
     }
 }
 

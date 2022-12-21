@@ -24,7 +24,7 @@ struct CardModifier: ViewModifier {
             .background(
                 RoundedRectangle(cornerRadius: 20)
                     .foregroundColor(.white)
-                    .shadow(color: .gray, radius: 1, x: 1, y: 1)
+                    .shadow(color: Color("ShadowColor"), radius: 1, x: 1, y: 1)
                     .opacity(0.3)
             )
     }
