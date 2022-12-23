@@ -18,6 +18,7 @@ class UserService: ObservableObject {
     @ObservedObject var loginViewModelAccessToken: LoginViewModel = LoginViewModel()
     
     @Published var commits: [Commit] = []
+    @Published var isCommited: Bool = false
     @Published var isLogin: Bool = false
     @Published var userInfo: UserInfoOverview = UserInfoOverview(
         userId: "알 수 없어요",
@@ -92,12 +93,12 @@ class UserService: ObservableObject {
             })
     }
     
-//    func getCommitData() {
-//        self.userID = UserDefaults.standard.string(forKey: "userID") ?? ""
-//        Task{@MainActor in
+    func getCommitData() {
+        self.userID = UserDefaults.standard.string(forKey: "userID") ?? ""
+        Task{@MainActor in
 //            do {
-////                let className = ".js-calendar-graph mx-md-2 mx-3 d-flex flex-column flex-items-end flex-xl-items-center overflow-hidden pt-1 is-graph-loading graph-canvas ContributionCalendar height-full text-center"
-//
+//                let className = ".js-calendar-graph mx-md-2 mx-3 d-flex flex-column flex-items-end flex-xl-items-center overflow-hidden pt-1 is-graph-loading graph-canvas ContributionCalendar height-full text-center"
+
 //                //            let html = try String(contentsOf: url, encoding: .utf8)
 //                let doc: Document = try SwiftSoup.parse(html)
 //                let dateFormatter = DateFormatter()
@@ -110,87 +111,46 @@ class UserService: ObservableObject {
 //            } catch let error {
 //                print("getCommitData Error: \(error)")
 //            }
-//
-//            let urlAddress = "https://github.com/users/\(self.userID)/contributions"
-//            guard let url = URL(string: urlAddress) else { return }
-//            do {
-//                let html = try String(contentsOf: url, encoding: .utf8)
-//                let parsedHtml = try SwiftSoup.parse(html)
-//                let dailyContribution = try parsedHtml.select("rect")
-//
-//                commits = dailyContribution
-//                    .compactMap({ element -> (String, String) in
-//                        guard
-//                            let dateString = try? element.attr("data-date"),
-//                            let levelString = try? element.attr("data-level")
-//                        else { return ("", "") }
-//
-//                        return (dateString, levelString)
-//                    })
-//                    .filter{ $0.0.isEmpty == false }
-//                    .compactMap({ (dateString, levelString) -> Commit in
-//                        let date = dateString.toDate() ?? Date()
-//                        let level = Int(levelString) ?? 0
-//
-//                        return Commit(date: date, level: level)
-//                    })
-//
-//                if commits.last!.date.isToday && commits.last!.level > 0 {
-//                    self.hasCommitted = emoji.committed.rawValue
-//                }
-//            }
-//            catch {
-//                fatalError("Cannot Get Data: \(error.localizedDescription)")
-//            }
-//        }
-//    }
-}
-    
-//
-//    private let userID: String
-//    private let baseURL: String
-//
-//    var hasCommitted: Int = emoji.notCommitted.rawValue
-//
-//    init() {
-////        self.userID = UserDefaults.standard.string(forKey: "userID") ?? ""
-//        self.userID = "wnsgur9137"
-//        self.baseURL = "http://github.com/users/\(userID)/contributions"
-//        getCommitData()
-//    }
-//
-//    func getCommitData() {
-//        guard let url: URL = URL(string: baseURL) else { fatalError("Cannot Get URL") }
-//        if self.userID != "" {
-//            do {
-//                let html = try String(contentsOf: url, encoding: .utf8)
-//                let parsedHtml = try SwiftSoup.parse(html)
-//                let dailyContribution = try parsedHtml.select("rect")
-//
-//                commits = dailyContribution
-//                    .compactMap({ element -> (String, String) in
-//                        guard
-//                            let dateString = try? element.attr("data-date"),
-//                            let levelString = try? element.attr("data-level")
-//                        else { return ("", "") }
-//
-//                        return (dateString, levelString)
-//                    })
-//                    .filter{ $0.0.isEmpty == false }
-//                    .compactMap({ (dateString, levelString) -> Commit in
-//                        let date = dateString.toDate() ?? Date()
-//                        let level = Int(levelString) ?? 0
-//
-//                        return Commit(date: date, level: level)
-//                    })
-//
-//                if commits.last!.date.isToday && commits.last!.level > 0 {
-//                    self.hasCommitted = emoji.committed.rawValue
-//                }
-//            }
-//            catch {
-//                fatalError("Cannot Get Data: \(error.localizedDescription)")
-//            }
-//        }
-//    }
 
+            let urlAddress = "https://github.com/users/\(self.userID)/contributions"
+            print("urlAddress: \(urlAddress)")
+            guard let url = URL(string: urlAddress) else { return }
+            do {
+                let html = try String(contentsOf: url, encoding: .utf8)
+                let parsedHtml = try SwiftSoup.parse(html)
+                let dailyContribution = try parsedHtml.select("rect")
+
+                commits = dailyContribution
+                    .compactMap({ element -> (String, String) in
+                        guard
+                            let dateString = try? element.attr("data-date"),
+                            let levelString = try? element.attr("data-level")
+                        else { return ("", "") }
+
+                        return (dateString, levelString)
+                    })
+                    .filter{ $0.0.isEmpty == false }
+                    .compactMap({ (dateString, levelString) -> Commit in
+                        let date = dateString.toDate() ?? Date()
+                        let level = Int(levelString) ?? 0
+                        
+//                        print(Commit(date: date, level: level))
+
+                        return Commit(date: date, level: level)
+                    })
+
+                if commits.last!.date.isToday && commits.last!.level > 0 {
+//                    self.hasCommitted = emoji.committed.rawValue
+                    self.isCommited = true
+                    print("오늘 커밋 했어요")
+                } else {
+                    self.isCommited = false
+                    print("커밋하지 않았어요")
+                }
+            }
+            catch {
+                fatalError("Cannot Get Data: \(error.localizedDescription)")
+            }
+        }
+    }
+}

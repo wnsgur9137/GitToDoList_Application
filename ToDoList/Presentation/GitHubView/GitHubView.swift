@@ -46,7 +46,7 @@ struct GitHubView: View {
                         
                         ChallengeStack()
                         
-    //                    ContributionView()
+    //                    C                          ontributionView()
                         
                         InformationView()
                             .frame(

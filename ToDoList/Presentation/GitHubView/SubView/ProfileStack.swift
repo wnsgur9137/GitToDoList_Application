@@ -33,10 +33,13 @@ struct ProfileStack: View {
                         .font(.headline)
                     Text("\(userService.userInfo.email ?? "등록된 이메일이 없어요")")
                         .frame(width: 210.0, alignment: .leading)
-                    Text("오늘 커밋을 완료했어요!")
-                        .foregroundColor(.green)
-                    Text("오늘 커밋을 하지 않았어요!")
-                        .foregroundColor(.red)
+                    if userService.isCommited {
+                        Text("오늘 커밋을 완료했어요!")
+                            .foregroundColor(.green)
+                    } else {
+                        Text("오늘 커밋을 하지 않았어요!")
+                            .foregroundColor(.red)
+                    }
                 }
             }
         }
