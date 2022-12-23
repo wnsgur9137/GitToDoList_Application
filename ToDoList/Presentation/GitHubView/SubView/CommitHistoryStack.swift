@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct CommitHistoryStack: View {
+    
+    @EnvironmentObject var userService: UserService
+    
     var body: some View {
         VStack(alignment: .leading, spacing: 10.0) {
             Text("커밋 기록")
@@ -22,32 +25,32 @@ struct CommitHistoryStack: View {
                         .aspectRatio(contentMode: .fit)
                         .frame(width: 50.0, height: 50.0)
                         .padding()
-                    Text("1개")
+                    Text("\(userService.commitHistory["today"] ?? 0)개")
                     Text("오늘")
                 }
                 
-                VStack(alignment: .center, spacing: 5.0) {
-                    Image(systemName: "flame.fill")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: 50.0, height: 50.0)
-//                        .clipShape(Circle())
-//                        .border(.blue)
-                        .foregroundColor(.red)
-                        .padding()
-                    Text("1개")
-                    Text("이번주")
-                }
                 VStack(alignment: .center, spacing: 5.0) {
                     Image(systemName: "calendar")
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .frame(width: 50.0, height: 50.0)
+//                        .clipShape(Circle())
+//                        .border(.blue)
+                        .padding()
+                    Text("\(userService.commitHistory["thisYear"] ?? 0)개")
+                    Text("올해")
+                }
+                VStack(alignment: .center, spacing: 5.0) {
+                    Image(systemName: "flame.fill")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 50.0, height: 50.0)
+                        .foregroundColor(.red)
                         .padding()
 //                        .clipShape(Circle())
 //                        .border(.blue)
-                    Text("1개")
-                    Text("올해")
+                    Text("0개")
+                    Text("연속")
                 }
             }
         }

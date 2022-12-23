@@ -19,6 +19,10 @@ class UserService: ObservableObject {
     
     @Published var commits: [Commit] = []
     @Published var isCommited: Bool = false
+    @Published var commitHistory: [String:Int] = ["today": 0,
+                                                  "thisYear": 0,
+                                                  "continuous": 0]
+    
     @Published var isLogin: Bool = false
     @Published var userInfo: UserInfoOverview = UserInfoOverview(
         userId: "알 수 없어요",
@@ -119,24 +123,28 @@ class UserService: ObservableObject {
                 let html = try String(contentsOf: url, encoding: .utf8)
                 let parsedHtml = try SwiftSoup.parse(html)
                 let dailyContribution = try parsedHtml.select("rect")
+                let thisYearContribution = try parsedHtml.getElementsByClass("f4 text-normal mb-2").text().split(separator: " ")[0]
+                print("thisYearContribution: \(try thisYearContribution)")
 
                 commits = dailyContribution
-                    .compactMap({ element -> (String, String) in
+                    .compactMap({ element -> (String, String, String) in
                         guard
                             let dateString = try? element.attr("data-date"),
-                            let levelString = try? element.attr("data-level")
-                        else { return ("", "") }
+                            let levelString = try? element.attr("data-level"),
+                            let countString = try? element.attr("data-count")
+                        else { return ("", "", "") }
 
-                        return (dateString, levelString)
+                        return (dateString, levelString, countString)
                     })
                     .filter{ $0.0.isEmpty == false }
-                    .compactMap({ (dateString, levelString) -> Commit in
+                    .compactMap({ (dateString, levelString, countString) -> Commit in
                         let date = dateString.toDate() ?? Date()
                         let level = Int(levelString) ?? 0
+                        let count = Int(countString) ?? 0
                         
-//                        print(Commit(date: date, level: level))
+                        print(Commit(date: date, level: level, count: count))
 
-                        return Commit(date: date, level: level)
+                        return Commit(date: date, level: level, count: count)
                     })
 
                 if commits.last!.date.isToday && commits.last!.level > 0 {
@@ -147,6 +155,12 @@ class UserService: ObservableObject {
                     self.isCommited = false
                     print("커밋하지 않았어요")
                 }
+                
+                self.commitHistory["today"] = commits.last!.level
+                print(thisYearContribution)
+                print(Int(thisYearContribution) ?? 0)
+                self.commitHistory["thisYear"] = Int(thisYearContribution) ?? 0
+//                print(commits.)
             }
             catch {
                 fatalError("Cannot Get Data: \(error.localizedDescription)")
