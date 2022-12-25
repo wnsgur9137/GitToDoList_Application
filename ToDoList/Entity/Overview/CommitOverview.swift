@@ -7,6 +7,7 @@
 
 import Foundation
 
+// Commit Data
 struct Commit: Codable, Identifiable {
     var id = UUID()
     var date: Date
@@ -20,6 +21,7 @@ struct Commit: Codable, Identifiable {
     }
 }
 
+// Commit History Data
 //struct CommitHistory: Identifiable {
 //    var id = UUID()
 //    var today: Int
