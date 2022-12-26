@@ -87,11 +87,12 @@ class UserService: ObservableObject {
                     do {
                         let result = try JSONDecoder().decode(UserInfoOverview.self, from: json!)
                         self?.userInfo = result
+                        print(result)
                     } catch {
-                        print("UserService: getUserInfo JSON Parsing Error")
+                        print("UserService.doCatch: getUserInfo JSON Parsing Error")
                     }
                 case .failure(let error):
-                    print("UserService: getUserInfo JSON Error: \(error)")
+                    print("UserService.failure: getUserInfo JSON Error: \(error)")
                 }
 
             })
@@ -100,31 +101,16 @@ class UserService: ObservableObject {
     func getCommitData() {
         self.userID = UserDefaults.standard.string(forKey: "userID") ?? ""
         Task{@MainActor in
-//            do {
-//                let className = ".js-calendar-graph mx-md-2 mx-3 d-flex flex-column flex-items-end flex-xl-items-center overflow-hidden pt-1 is-graph-loading graph-canvas ContributionCalendar height-full text-center"
-
-//                //            let html = try String(contentsOf: url, encoding: .utf8)
-//                let doc: Document = try SwiftSoup.parse(html)
-//                let dateFormatter = DateFormatter()
-//                dateFormatter.dateFormat = "YYYY-MM-dd"
-//                let today = dateFormatter.string(from: Date())
-//                print("today: \(today)")
-//                let commitData: Elements = try doc.select(".f4 text-normal mb-2")
-//                print(try commitData.text())
-//
-//            } catch let error {
-//                print("getCommitData Error: \(error)")
-//            }
-
             let urlAddress = "https://github.com/users/\(self.userID)/contributions"
-            print("urlAddress: \(urlAddress)")
+//            print("urlAddress: \(urlAddress)")
             guard let url = URL(string: urlAddress) else { return }
             do {
                 let html = try String(contentsOf: url, encoding: .utf8)
                 let parsedHtml = try SwiftSoup.parse(html)
                 let dailyContribution = try parsedHtml.select("rect")
                 let thisYearContribution = try parsedHtml.getElementsByClass("f4 text-normal mb-2").text().split(separator: " ")[0]
-                print("thisYearContribution: \(try thisYearContribution)")
+                
+                var test = 0
 
                 commits = dailyContribution
                     .compactMap({ element -> (String, String, String) in
@@ -142,7 +128,8 @@ class UserService: ObservableObject {
                         let level = Int(levelString) ?? 0
                         let count = Int(countString) ?? 0
                         
-                        print(Commit(date: date, level: level, count: count))
+                        print("\(test): \(Commit(date: date, level: level, count: count))")
+                        test+=1
 
                         return Commit(date: date, level: level, count: count)
                     })
@@ -150,20 +137,19 @@ class UserService: ObservableObject {
                 if commits.last!.date.isToday && commits.last!.level > 0 {
 //                    self.hasCommitted = emoji.committed.rawValue
                     self.isCommited = true
-                    print("오늘 커밋 했어요")
                 } else {
                     self.isCommited = false
-                    print("커밋하지 않았어요")
                 }
                 
+                print("commits.count: \(commits.count)")
+                print("commits[365].level: \(commits[365].level)")
+                
                 self.commitHistory["today"] = commits.last!.level
-                print(thisYearContribution)
-                print(Int(thisYearContribution) ?? 0)
                 self.commitHistory["thisYear"] = Int(thisYearContribution) ?? 0
-//                print(commits.)
             }
             catch {
-                fatalError("Cannot Get Data: \(error.localizedDescription)")
+                print("Cannot Get Data: \(error.localizedDescription)")
+//                fatalError("Cannot Get Data: \(error.localizedDescription)")
             }
         }
     }

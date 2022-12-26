@@ -19,8 +19,10 @@ struct GitHubView: View {
         
 //        let userID = UserDefaults.standard.string(forKey: "accessToken") ?? ""
         let userID = UserDefaults.standard.string(forKey: "userID") ?? ""
-        let loading = loadingService.isLoading
-        if loading == false {
+//        let loading = loadingService.isLoading
+//        let islogin = userService.isLogin
+//        if islogin == false {
+        if userID == "" {
             VStack {
                 Text("reflash: \(reflash)")
                     .hidden()
@@ -44,9 +46,9 @@ struct GitHubView: View {
                                 minHeight: 160.0, maxHeight: 300.0
                             )
                         
-                        ChallengeStack()
+//                        ChallengeStack()
                         
-    //                    C                          ontributionView()
+                        ContributionView()
                         
                         InformationView()
                             .frame(

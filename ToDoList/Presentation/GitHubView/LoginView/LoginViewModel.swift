@@ -14,6 +14,7 @@ import KeychainSwift
 class LoginViewModel: ObservableObject {
     
     @Published var accessToken: String = ""
+    @EnvironmentObject var userService: UserService
     
     let clientID = GitHub.clientID
     let secret = GitHub.secrets

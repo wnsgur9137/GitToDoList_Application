@@ -14,56 +14,56 @@ struct ContributionView: View {
 //    @EnvironmentObject var colorThemeService: ColorThemeService
     private let weekday = Calendar.current.component(.weekday, from: Date())
 //    private let width: CGFloat = uiSize.width * widthRatio.card - 20
-    @Namespace var end
+    @Namespace var endID
     
     @ViewBuilder
-    func ColorView(_ contributionLevel:Int) -> some View {
-//        let themeColors = colorThemeService.themeColors
-//        RoundedRectangle(cornerRadius: 2)
-//            .foregroundColor(themeColors[contributionLevel])
-//            .frame(width:15, height:15)
+    func CommitBox(_ commitLevel:Int) -> some View {
+        if commitLevel == 0 {
+            RoundedRectangle(cornerRadius: 2.0)
+                .foregroundColor(Color(.systemGray6))
+                .frame(width: 15.0, height: 15.0)
+        } else {
+            RoundedRectangle(cornerRadius: 2.0)
+                .foregroundColor(.green)
+                .frame(width: 15.0, height: 15.0)
+        }
     }
     
     var body: some View {
-        Text("ContributionView")
-//        ZStack {
-//            VStack (alignment: .leading, spacing: 5) {
-//                Text("Contribution")
-//                    .font(.system(size: 18, weight: .bold))
-//                HStack(){}
-//                .modifier(CardModifier(height: 150))
-//            }
-//            VStack (alignment: .leading, spacing: 5) {
-//                Text("Hidden")
-//                    .font(.system(size: 18, weight: .bold))
-//                    .hidden()
-//                ScrollView (.horizontal) {
-//                    ScrollViewReader { scroll in
-//                        HStack (alignment: .top, spacing: 3) {
-//                            ForEach (0..<52, id: \.self) { col in
-//                                VStack (spacing: 3) {
-//                                    ForEach (0..<7, id: \.self) { row in
-//                                        ColorView(userService.commits[col * 7 + row].level)
-//                                    }
-//                                }
-//                            }
-//                            VStack (spacing: 3) {
-//                                ForEach(364..<userService.commits.count, id: \.self) { cell in
-//                                    ColorView(userService.commits[cell].level)
-//                                }
-//                            }
-//                            .id(end)
-//                        }
-//                        .onAppear {
-//                            scroll.scrollTo(end)
-//                        }
-//                        .cornerRadius(4)
-//                    }
-//                }
-//                .frame(width: width, height: 100)
-//            }
-//        }
-//        .padding(.top, 15)
+        VStack(alignment: .leading, spacing: 10.0) {
+            Text("Commit Contribution")
+                .font(.headline)
+                .fontDesign(.rounded)
+                .padding(EdgeInsets(top: 0.0, leading: 12.0, bottom: 0.0, trailing: 0.0))
+            ScrollViewReader { scroll in
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack(alignment: .top, spacing: 5.0) {
+                        let count = ceil(Double(userService.commits.count)/Double(7))
+                        ForEach(0..<Int(count), id: \.self) { col in
+                            VStack(spacing: 5.0) {
+                                ForEach(0..<7, id: \.self) { row in
+                                    let index = ((col * 7) + row)
+                                    if index <= 365 {
+                                        CommitBox(userService.commits[index].level)
+                                    }
+                                }
+                            }
+                        }
+                        VStack {}.id(endID)
+                    }
+                    .onAppear {
+                        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1) {
+                            withAnimation { scroll.scrollTo(endID) }
+                        }
+                    }
+                }
+            }
+        }
+        .padding(20.0)
+        .background(Color("SubViewBackground"))
+        .cornerRadius(16.0)
+        .shadow(color: Color("ShadowColor"), radius: 5, x: 5.0, y:5.0)
+        .frame(width: 380.0)
     }
 }
 
