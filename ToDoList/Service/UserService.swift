@@ -155,7 +155,7 @@ class UserService: ObservableObject {
                         commitContinues += 1
                     }
                 } while true
-//                self.commitHistory["continues"] = Int(commitContinues) ?? 0
+                self.commitHistory["continues"] = Int(commitContinues)
             }
             catch {
                 print("Cannot Get Data: \(error.localizedDescription)")

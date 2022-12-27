@@ -49,7 +49,7 @@ struct CommitHistoryStack: View {
                         .padding()
 //                        .clipShape(Circle())
 //                        .border(.blue)
-                    Text("0개")
+                    Text("\(userService.commitHistory["continues"] ?? 0)일")
                     Text("연속")
                 }
             }
