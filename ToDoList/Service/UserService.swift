@@ -142,7 +142,7 @@ class UserService: ObservableObject {
                 }
                 
                 /// Commit History
-                self.commitHistory["today"] = commits.last!.level
+                self.commitHistory["today"] = commits.last!.count
                 self.commitHistory["thisYear"] = Int(thisYearContribution) ?? 0
                 
                 var commitsCount = self.commits.count

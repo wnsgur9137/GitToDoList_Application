@@ -72,22 +72,27 @@ struct GitHubView: View {
                         Text("reflash: \(reflash)")
                             .hidden()
                         
-                    } // VStack
+                    } /// VStack
                     .navigationTitle("GitHub")
-                } // ScrollView
+                } /// ScrollView
     //            .background(Color.green)
                 .background(LinearGradient(gradient: Gradient(colors: [Color("BackgroundColor1"), Color("BackgroundColor2")]), startPoint: .top, endPoint: .bottom))
-            } // NavigationView
+            } /// NavigationView
             .onAppear {
                 userService.getUserInfo()
                 userService.getCommitData()
                 reflash+=1
             }
-        }
-        
-        
-    } // var body
-} // struct GitHubView
+            .refreshable {
+                userService.getUserInfo()
+                userService.getCommitData()
+                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1) {
+                    self.reflash += 1
+                }
+            }
+        } /// else
+    } /// var body
+} /// struct GitHubView
 
 struct GitHubView_Previews: PreviewProvider {
     static var previews: some View {
