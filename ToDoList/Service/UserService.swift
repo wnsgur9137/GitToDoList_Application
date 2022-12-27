@@ -110,7 +110,7 @@ class UserService: ObservableObject {
                 let dailyContribution = try parsedHtml.select("rect")
                 let thisYearContribution = try parsedHtml.getElementsByClass("f4 text-normal mb-2").text().split(separator: " ")[0]
                 
-                var test = 0
+//                var test = 0
 
                 commits = dailyContribution
                     .compactMap({ element -> (String, String, String) in
@@ -119,7 +119,7 @@ class UserService: ObservableObject {
                             let levelString = try? element.attr("data-level"),
                             let countString = try? element.attr("data-count")
                         else { return ("", "", "") }
-
+                        
                         return (dateString, levelString, countString)
                     })
                     .filter{ $0.0.isEmpty == false }
@@ -128,8 +128,8 @@ class UserService: ObservableObject {
                         let level = Int(levelString) ?? 0
                         let count = Int(countString) ?? 0
                         
-                        print("\(test): \(Commit(date: date, level: level, count: count))")
-                        test+=1
+//                        print("\(test): \(Commit(date: date, level: level, count: count))")
+//                        test+=1
 
                         return Commit(date: date, level: level, count: count)
                     })
@@ -141,11 +141,21 @@ class UserService: ObservableObject {
                     self.isCommited = false
                 }
                 
-                print("commits.count: \(commits.count)")
-                print("commits[365].level: \(commits[365].level)")
-                
+                /// Commit History
                 self.commitHistory["today"] = commits.last!.level
                 self.commitHistory["thisYear"] = Int(thisYearContribution) ?? 0
+                
+                var commitsCount = self.commits.count
+                var commitContinues = 0
+                repeat {
+                    commitsCount -= 1
+                    if self.commits[commitsCount].level == 0 {
+                        break
+                    } else {
+                        commitContinues += 1
+                    }
+                } while true
+//                self.commitHistory["continues"] = Int(commitContinues) ?? 0
             }
             catch {
                 print("Cannot Get Data: \(error.localizedDescription)")

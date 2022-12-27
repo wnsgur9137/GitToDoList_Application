@@ -43,7 +43,7 @@ struct ContributionView: View {
                             VStack(spacing: 5.0) {
                                 ForEach(0..<7, id: \.self) { row in
                                     let index = ((col * 7) + row)
-                                    if index <= 365 {
+                                    if index < userService.commits.count {
                                         CommitBox(userService.commits[index].level)
                                     }
                                 }
