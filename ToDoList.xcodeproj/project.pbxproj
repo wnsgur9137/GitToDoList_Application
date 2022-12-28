@@ -45,6 +45,8 @@
 		66F8C81E2950D21A0073A170 /* InformationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F8C81D2950D21A0073A170 /* InformationView.swift */; };
 		66F8C8212951813A0073A170 /* LoadingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F8C8202951813A0073A170 /* LoadingService.swift */; };
 		66F8C8232952A3850073A170 /* CommitOverview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F8C8222952A3850073A170 /* CommitOverview.swift */; };
+		66F8C826295ABBDE0073A170 /* EventService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F8C825295ABBDE0073A170 /* EventService.swift */; };
+		66F8C828295AD1380073A170 /* FSCalendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F8C827295AD1380073A170 /* FSCalendar.swift */; };
 		EEDE6F722E48EAD38D2CEB07 /* Pods_ToDoList.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 102C4C833E586BF6C782ECFF /* Pods_ToDoList.framework */; };
 /* End PBXBuildFile section */
 
@@ -91,6 +93,8 @@
 		66F8C81D2950D21A0073A170 /* InformationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InformationView.swift; sourceTree = "<group>"; };
 		66F8C8202951813A0073A170 /* LoadingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingService.swift; sourceTree = "<group>"; };
 		66F8C8222952A3850073A170 /* CommitOverview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommitOverview.swift; sourceTree = "<group>"; };
+		66F8C825295ABBDE0073A170 /* EventService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventService.swift; sourceTree = "<group>"; };
+		66F8C827295AD1380073A170 /* FSCalendar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FSCalendar.swift; sourceTree = "<group>"; };
 		B08FE9B65C76309A1B114636 /* Pods-ToDoList.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ToDoList.debug.xcconfig"; path = "Target Support Files/Pods-ToDoList/Pods-ToDoList.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -127,6 +131,7 @@
 			isa = PBXGroup;
 			children = (
 				663E12CF294A20A300BE0BF6 /* FSCalendarView.swift */,
+				66F8C827295AD1380073A170 /* FSCalendar.swift */,
 			);
 			path = SubView;
 			sourceTree = "<group>";
@@ -277,6 +282,7 @@
 			children = (
 				663E12DA294AE69400BE0BF6 /* UserService.swift */,
 				66F8C8202951813A0073A170 /* LoadingService.swift */,
+				66F8C825295ABBDE0073A170 /* EventService.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -415,6 +421,7 @@
 				66C4BF312949D4B600DA3EF8 /* AlarmViewModel.swift in Sources */,
 				66A30B8A294950C000146003 /* GitHubViewModel.swift in Sources */,
 				66A30B932949529300146003 /* TabBarModel.swift in Sources */,
+				66F8C828295AD1380073A170 /* FSCalendar.swift in Sources */,
 				66F8C78A294F44F00073A170 /* RepositorysView.swift in Sources */,
 				66A30B8C294950C500146003 /* GitHubModel.swift in Sources */,
 				66A30B8829494A3E00146003 /* MainModel.swift in Sources */,
@@ -435,6 +442,7 @@
 				66F8C81E2950D21A0073A170 /* InformationView.swift in Sources */,
 				66F8C777294BFB760073A170 /* LoginViewModel.swift in Sources */,
 				66A30B8E294950CC00146003 /* GitHubView.swift in Sources */,
+				66F8C826295ABBDE0073A170 /* EventService.swift in Sources */,
 				66C4BF2C2949D4A200DA3EF8 /* CalendarView.swift in Sources */,
 				66C4BF212949D3D000DA3EF8 /* ChallengeStack.swift in Sources */,
 				66F8C779294BFB7A0073A170 /* LoginModel.swift in Sources */,

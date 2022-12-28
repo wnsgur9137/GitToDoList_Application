@@ -9,21 +9,42 @@ import SwiftUI
 
 struct CalendarView: View {
     
+    @EnvironmentObject var eventService: EventService
+    
     var body: some View {
         NavigationView {
-            VStack {
+            ScrollView {
                 VStack {
-                    Spacer()
-                    CalendarModuleView()
-                    Spacer()
-                }
-                VStack {
-                    Spacer()
+                    VStack {
+                        Spacer()
+                            .frame(height: 1.0)
+                        CalendarModuleView()
+                            .frame(height:400.0)
+                            .cornerRadius(15.0)
+                            .background(
+                                RoundedRectangle(cornerRadius: 25)
+                                    .fill(Color.gray)
+                                    .shadow(color: .gray, radius: 2, x: 0, y: 2)
+                            )
+                    }
+                    
+                    VStack {
                     Text("Details")
+                    Text("\(eventService.tapCount)번")
+                    Text("\(eventService.date)일")
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        .background(
+                            RoundedRectangle(cornerRadius: 25)
+                                .fill(Color.gray)
+                                .shadow(color: .gray, radius: 2, x: 0, y: 2)
+                        )
+                    }
+                    
                     Spacer()
                 }
+                .background(.background)
+                .navigationTitle("Calendar")
             }
-            .navigationTitle("Calendar")
         }
     }
 }

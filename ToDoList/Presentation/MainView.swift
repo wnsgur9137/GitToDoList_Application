@@ -25,16 +25,10 @@ struct MainView: View {
         switch type {
         case .github:
             GitHubView()
-//            let userID = UserDefaults.standard.string(forKey: "userID") ?? ""
-//            if userID == "" {
-//                LoginView(reflash: self.$reflash)
-//            } else {
-//                GitHubView()
-//            }
         case .toDoList:
             CalendarView()
-        case .alarm:
-            AlarmView()
+//        case .alarm:
+//            AlarmView()
         }
     }
 }

@@ -62,9 +62,17 @@ struct GitHubView: View {
                             reflash += 1
                             print("Logout")
                         }
-                        .accentColor(.red)
+//                        .accentColor(.red)
+                        .tint(.red)
                         .font(.headline)
+                        .background(.ultraThinMaterial, in: Capsule())
+//                        .background(.ultraThickMaterial, in: Capsule())
                         .padding(8.0)
+//                        .background(
+//                            RoundedRectangle(cornerRadius: 25)
+//                                            .fill(Color.white)
+//                                            .shadow(color: .gray, radius: 2, x: 0, y: 2)
+//                        )
                         .overlay(Capsule().stroke(Color.red))
                         
                         Text("userID: \(userID)")

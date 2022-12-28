@@ -52,7 +52,7 @@ struct ContributionView: View {
                         VStack {}.id(endID)
                     }
                     .onAppear {
-                        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1) {
+                        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.5) {
                             withAnimation { scroll.scrollTo(endID) }
                         }
                     }

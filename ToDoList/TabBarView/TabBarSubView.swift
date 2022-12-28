@@ -32,7 +32,7 @@ struct TabBarSubView: View {
             }
         }
         .frame(width: self.width, height: self.height)
-        .background(Color.white)
+        .background(Color("BackgroundColor1"))
         .cornerRadius(13.0)
         .shadow(radius: 5, x: 0, y: 4)
     }
