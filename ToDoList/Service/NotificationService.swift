@@ -36,14 +36,15 @@ class NotificationService: ObservableObject {
         }
     }
     
-    @Published var notiTime: Date = ((UserDefaults.standard.string(forKey: "notiTime"))?.toNoticeTime() ?? Date()) {
+    @Published var notiTime: Date = ((UserDefaults.standard.string(forKey: "notiTime"))?.toNotificationTime() ?? Date()) {
         didSet {
-            print("notiTime: \(notiTime)")
-            self.removeAllNotifications()
-            let stringNotiTime = notiTime.toNoticeString
+            // UserDefaults
+            let stringNotiTime = notiTime.toNotificationString
             UserDefaults.standard.set(stringNotiTime, forKey: "notiTime")
+            
+            // Notifications
+            self.removeAllNotifications()
             self.requestNotiAuthorization()
-            self.addNotification(with: self.notiTime)
         }
     }
     
@@ -55,10 +56,20 @@ class NotificationService: ObservableObject {
     }
     
     func requestNotiAuthorization() {
-        print("requestNotiAuthorization()")
         notiCenter.getNotificationSettings { settings in
             /// 승인되어 있지 않은 경우
-            if settings.authorizationStatus != .authorized {
+            
+            switch settings.authorizationStatus {
+            case .authorized:
+                self.addNotification(with: self.notiTime)
+            case .denied:
+                DispatchQueue.main.async {
+                    print(self.isAlertOccurred)
+                    self.isAlertOccurred = !self.isAlertOccurred
+                    print("denied")
+                    print(self.isAlertOccurred)
+                }
+            default:
                 self.notiCenter.requestAuthorization(options: [.alert, .badge, .sound]) { granted, error in
                     if let error = error {
                         print("Notification Error: \(error)")
@@ -66,20 +77,12 @@ class NotificationService: ObservableObject {
                     print("granted: \(granted)")
                     if granted { /// Notification 최초 승인
                         self.addNotification(with: self.notiTime)
-                        print("addNotification()")
                     } else { /// Notification 최초 거부
-                        DispatchQueue.main.async {
-                            self.isToggle = false
+                        DispatchQueue.main.async { [weak self] in
+                            self?.isAlertOccurred = !(self?.isAlertOccurred ?? false)
+                            self?.isToggle = false
                         }
                     }
-                }
-            }
-            
-            /// 거부되어있는 경우 alert
-            if settings.authorizationStatus == .denied {
-                /// 알림 띄운 뒤 설정 창으로 이동
-                DispatchQueue.main.async {
-                    self.isAlertOccurred = true
                 }
             }
         }
@@ -92,11 +95,11 @@ class NotificationService: ObservableObject {
         content.subtitle = "커밋"
         content.sound = UNNotificationSound.default
         
-        print("time: \(time)")
-        
+        print("addNotificationTime: \(time)")
         let dateComponent = Calendar.current.dateComponents([.hour, .minute], from: time)
         print("dateComponent: \(dateComponent)")
         let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponent, repeats: true)
+//        let trigger1 = UNTimeIntervalNotificationTrigger(timeInterval: 60, repeats: true)
         let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
         
         notiCenter.add(request) { error in

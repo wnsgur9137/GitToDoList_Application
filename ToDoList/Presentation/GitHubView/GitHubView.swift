@@ -13,6 +13,7 @@ struct GitHubView: View {
     
     @EnvironmentObject var userService: UserService
     @EnvironmentObject var loadingService: LoadingService
+    @EnvironmentObject var notificationService: NotificationService
     @ObservedObject var accessTokenObject: LoginViewModel = LoginViewModel()
     
     var body: some View {

@@ -14,6 +14,7 @@ struct LoginView: View {
     @Binding var reflash: Int
     @ObservedObject var loginViewModel = LoginViewModel()
     @EnvironmentObject var loadingService: LoadingService
+    @EnvironmentObject var notificationService: NotificationService
     
     private let timer = Timer.publish(every: 0.1, on: .main, in: .common).autoconnect()
     
@@ -59,6 +60,7 @@ struct LoginView: View {
                         self.loadingIndicator = false
                     }
                 }
+                notificationService.isToggle = true
             })
             .onReceive(self.timer) { _ in
                 if (self.loadingIndicator) && (loadingAmount < 100) {
