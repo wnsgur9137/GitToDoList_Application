@@ -145,6 +145,13 @@ class UserService: ObservableObject {
                 self.commitHistory["today"] = commits.last!.count
                 self.commitHistory["thisYear"] = Int(thisYearContribution) ?? 0
                 
+                /// Notification을 사용하기 위한 UserDefaults
+                if commits.last!.count > 0 {
+                    UserDefaults.standard.set(true, forKey: "commitDataBool")
+                } else {
+                    UserDefaults.standard.set(false, forKey: "commitDataBool")
+                }
+                
                 var commitsCount = self.commits.count
                 var commitContinues = 0
                 repeat {

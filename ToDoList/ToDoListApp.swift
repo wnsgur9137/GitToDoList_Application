@@ -14,6 +14,7 @@ struct ToDoListApp: App {
             MainView()
                 .environmentObject(UserService())
                 .environmentObject(LoadingService())
+                .environmentObject(NotificationService())
                 .environmentObject(EventService())
 //                .environmentObject(CalendarModule().eventService)
         }

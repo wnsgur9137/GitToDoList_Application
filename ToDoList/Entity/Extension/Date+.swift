@@ -35,4 +35,12 @@ extension Date {
         let formattedString = dateFormatter.string(from: self)
         return formattedString
     }
+    
+    var toNoticeString: String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "HH:mm:ss"
+        dateFormatter.timeZone = TimeZone(identifier: "UTC")
+        let dateString = dateFormatter.string(from: self)
+        return dateString
+    }
 }

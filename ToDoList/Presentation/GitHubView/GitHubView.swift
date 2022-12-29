@@ -56,25 +56,6 @@ struct GitHubView: View {
                                 minHeight: 160.0, maxHeight: 300.0
                             )
                         
-                        Button("로그아웃") {
-                            loadingService.isLoading = false
-                            userService.logout()
-                            reflash += 1
-                            print("Logout")
-                        }
-//                        .accentColor(.red)
-                        .tint(.red)
-                        .font(.headline)
-                        .background(.ultraThinMaterial, in: Capsule())
-//                        .background(.ultraThickMaterial, in: Capsule())
-                        .padding(8.0)
-//                        .background(
-//                            RoundedRectangle(cornerRadius: 25)
-//                                            .fill(Color.white)
-//                                            .shadow(color: .gray, radius: 2, x: 0, y: 2)
-//                        )
-                        .overlay(Capsule().stroke(Color.red))
-                        
                         Text("userID: \(userID)")
                             .hidden()
                         Text("reflash: \(reflash)")
@@ -82,6 +63,15 @@ struct GitHubView: View {
                         
                     } /// VStack
                     .navigationTitle("GitHub")
+                    .navigationBarItems(
+                        trailing: NavigationLink(
+                            destination: GitSettingView(),
+                            label: {
+                                Image(systemName: "gearshape.fill")
+                                    .foregroundColor(.green)
+                            }
+                        )
+                    )
                 } /// ScrollView
     //            .background(Color.green)
                 .background(LinearGradient(gradient: Gradient(colors: [Color("BackgroundColor1"), Color("BackgroundColor2")]), startPoint: .top, endPoint: .bottom))

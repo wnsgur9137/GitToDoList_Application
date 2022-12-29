@@ -47,6 +47,8 @@
 		66F8C8232952A3850073A170 /* CommitOverview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F8C8222952A3850073A170 /* CommitOverview.swift */; };
 		66F8C826295ABBDE0073A170 /* EventService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F8C825295ABBDE0073A170 /* EventService.swift */; };
 		66F8C828295AD1380073A170 /* FSCalendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F8C827295AD1380073A170 /* FSCalendar.swift */; };
+		66F8C82C295BC8090073A170 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F8C82B295BC8090073A170 /* NotificationService.swift */; };
+		66F8C82E295BCEE10073A170 /* GitSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F8C82D295BCEE10073A170 /* GitSettingView.swift */; };
 		EEDE6F722E48EAD38D2CEB07 /* Pods_ToDoList.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 102C4C833E586BF6C782ECFF /* Pods_ToDoList.framework */; };
 /* End PBXBuildFile section */
 
@@ -95,6 +97,8 @@
 		66F8C8222952A3850073A170 /* CommitOverview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommitOverview.swift; sourceTree = "<group>"; };
 		66F8C825295ABBDE0073A170 /* EventService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventService.swift; sourceTree = "<group>"; };
 		66F8C827295AD1380073A170 /* FSCalendar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FSCalendar.swift; sourceTree = "<group>"; };
+		66F8C82B295BC8090073A170 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
+		66F8C82D295BCEE10073A170 /* GitSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitSettingView.swift; sourceTree = "<group>"; };
 		B08FE9B65C76309A1B114636 /* Pods-ToDoList.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ToDoList.debug.xcconfig"; path = "Target Support Files/Pods-ToDoList/Pods-ToDoList.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -196,6 +200,7 @@
 				66A30B8B294950C500146003 /* GitHubModel.swift */,
 				66A30B89294950C000146003 /* GitHubViewModel.swift */,
 				66A30B8D294950CC00146003 /* GitHubView.swift */,
+				66F8C82F295BCEEA0073A170 /* GitSettingView */,
 				66F8C780294DA9B30073A170 /* LoginView */,
 				66C4BF242949D3E300DA3EF8 /* SubView */,
 			);
@@ -283,6 +288,7 @@
 				663E12DA294AE69400BE0BF6 /* UserService.swift */,
 				66F8C8202951813A0073A170 /* LoadingService.swift */,
 				66F8C825295ABBDE0073A170 /* EventService.swift */,
+				66F8C82B295BC8090073A170 /* NotificationService.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -295,6 +301,14 @@
 				66F8C76C294BEFCD0073A170 /* Date+.swift */,
 			);
 			path = Extension;
+			sourceTree = "<group>";
+		};
+		66F8C82F295BCEEA0073A170 /* GitSettingView */ = {
+			isa = PBXGroup;
+			children = (
+				66F8C82D295BCEE10073A170 /* GitSettingView.swift */,
+			);
+			path = GitSettingView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -435,6 +449,7 @@
 				66C4BF2A2949D49700DA3EF8 /* CalendarViewModel.swift in Sources */,
 				66F8C76B294BEFA90073A170 /* String+.swift in Sources */,
 				66A30B792949493400146003 /* MainView.swift in Sources */,
+				66F8C82E295BCEE10073A170 /* GitSettingView.swift in Sources */,
 				66C4BF222949D3D000DA3EF8 /* ProfileStack.swift in Sources */,
 				66C4BF232949D3D000DA3EF8 /* CommitHistoryStack.swift in Sources */,
 				663E12D0294A20A300BE0BF6 /* FSCalendarView.swift in Sources */,
@@ -443,6 +458,7 @@
 				66F8C777294BFB760073A170 /* LoginViewModel.swift in Sources */,
 				66A30B8E294950CC00146003 /* GitHubView.swift in Sources */,
 				66F8C826295ABBDE0073A170 /* EventService.swift in Sources */,
+				66F8C82C295BC8090073A170 /* NotificationService.swift in Sources */,
 				66C4BF2C2949D4A200DA3EF8 /* CalendarView.swift in Sources */,
 				66C4BF212949D3D000DA3EF8 /* ChallengeStack.swift in Sources */,
 				66F8C779294BFB7A0073A170 /* LoginModel.swift in Sources */,
