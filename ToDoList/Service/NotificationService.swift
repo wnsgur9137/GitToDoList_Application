@@ -14,12 +14,6 @@ class NotificationService: ObservableObject {
     
     @Published var isCommited: Bool = UserDefaults.standard.bool(forKey: "commitDataBool") {
         didSet {
-//            removeAllNotifications()
-//            if isCommited {
-//                requestNotiAuthorization()
-//            } else {
-//                removeAllNotifications()
-//            }
         }
     }
     
