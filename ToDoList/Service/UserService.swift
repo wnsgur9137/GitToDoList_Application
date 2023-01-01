@@ -17,14 +17,14 @@ class UserService: ObservableObject {
     @EnvironmentObject var loadingService: LoadingService
     @ObservedObject var loginViewModelAccessToken: LoginViewModel = LoginViewModel()
     
-    @Published var commits: [Commit] = []
-    @Published var isCommited: Bool = false
-    @Published var commitHistory: [String:Int] = ["today": 0,
-                                                  "thisYear": 0,
-                                                  "continuous": 0]
+    @Published var commits: [Commit] = []   // Commit 데이터
+    @Published var isCommited: Bool = false // 커밋을 했는지 확인하는 여부
+    @Published var commitHistory: [String:Int] = ["today": 0,   // 오늘 커밋
+                                                  "thisYear": 0,    // 올해 커밋
+                                                  "continuous": 0]  // 연속 커밋
     
-    @Published var isLogin: Bool = false
-    @Published var userInfo: UserInfoOverview = UserInfoOverview(
+    @Published var isLogin: Bool = false    // 로그인 상태 확인 여부
+    @Published var userInfo: UserInfoOverview = UserInfoOverview(   // 유저 정보
         userId: "알 수 없어요",
         name: "등록된 이름이 없어요",
         avatarUrl: "",
@@ -54,15 +54,17 @@ class UserService: ObservableObject {
         subscriptionsUrl: ""
     )
     
-    private var userID: String
-    private var accessToken: String
+    private var userID: String  // 유저 아이디
+    private var accessToken: String // GitHub API 이용하기 위한 토큰
     
+    /// 로그아웃 함수.
     func logout() {
         print("userService: LogOut")
         UserDefaults.standard.removeObject(forKey: "userID")
         KeychainSwift().clear()
     }
     
+    /// 초기화
     init() {
         self.userID = UserDefaults.standard.string(forKey: "userID") ?? ""
 //        self.accessToken = KeychainSwift().get("accessToken") ?? "없음"
@@ -70,6 +72,7 @@ class UserService: ObservableObject {
 //        self.getUserInfo()
     }
     
+    /// 유저 정보를 받아온다.
     func getUserInfo() {
         self.userID = UserDefaults.standard.string(forKey: "userID") ?? ""
         self.accessToken = UserDefaults.standard.string(forKey: "accessToken") ?? ""
@@ -98,6 +101,7 @@ class UserService: ObservableObject {
             })
     }
     
+    /// 커밋 데이터를 가져온다.
     func getCommitData() {
         self.userID = UserDefaults.standard.string(forKey: "userID") ?? ""
         Task{@MainActor in
