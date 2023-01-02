@@ -50,8 +50,8 @@ struct GitSettingView: View {
                                displayedComponents: .hourAndMinute)
                         .environment(\.locale, Locale.init(identifier: "ko_KR"))
                         .environment(\.timeZone, TimeZone(abbreviation: "KST")!)
-                    Text("\(notificationService.notiTime)")
-                    Text("\(date)")
+//                    Text("\(notificationService.notiTime)")
+//                    Text("\(date)")
                 }
             }
             

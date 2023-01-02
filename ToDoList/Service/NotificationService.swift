@@ -22,8 +22,10 @@ class NotificationService: ObservableObject {
             print("isToggle: \(isToggle)")
             if isToggle {
                 UserDefaults.standard.set(true, forKey: "notiBool")
+                print("isToggle")
                 self.requestNotiAuthorization()
             } else {
+                print("notToggle")
                 self.removeAllNotifications()
                 UserDefaults.standard.set(false, forKey: "notiBool")
             }
@@ -37,7 +39,9 @@ class NotificationService: ObservableObject {
             UserDefaults.standard.set(stringNotiTime, forKey: "notiTime")
             
             // Notifications
+            print("removeAllNotifications")
             self.removeAllNotifications()
+            print("requestNotifications")
             self.requestNotiAuthorization()
         }
     }
@@ -88,15 +92,17 @@ class NotificationService: ObservableObject {
         content.title = "Git 도우미"
         content.subtitle = "커밋"
         content.sound = UNNotificationSound.default
+        content.body = "Content Body"
         
         print("addNotificationTime: \(time)")
         let dateComponent = Calendar.current.dateComponents([.hour, .minute], from: time)
         print("dateComponent: \(dateComponent)")
-        let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponent, repeats: true)
-//        let trigger1 = UNTimeIntervalNotificationTrigger(timeInterval: 60, repeats: true)
-        let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
+//        let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponent, repeats: true)
+        let trigger1 = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
+        let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger1)
         
         notiCenter.add(request) { error in
+            guard error == nil else { return }
             print("Notification Add Error: \(String(describing: error?.localizedDescription))")
         }
     }

@@ -23,22 +23,22 @@ struct CalendarView: View {
                             .cornerRadius(15.0)
                             .background(
                                 RoundedRectangle(cornerRadius: 25)
-                                    .fill(Color.gray)
+                                    .fill(.gray)
                                     .shadow(color: .gray, radius: 2, x: 0, y: 2)
                             )
                     }
                     
-                    VStack {
-                    Text("Details")
-                    Text("\(eventService.tapCount)번")
-                    Text("\(eventService.date)일")
-                        .frame(maxWidth: .infinity, maxHeight: .infinity)
-                        .background(
-                            RoundedRectangle(cornerRadius: 25)
-                                .fill(Color.gray)
-                                .shadow(color: .gray, radius: 2, x: 0, y: 2)
-                        )
-                    }
+//                    VStack {
+//                    Text("Details")
+//                    Text("\(eventService.tapCount)번")
+//                    Text("\(eventService.date)일")
+//                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+//                        .background(
+//                            RoundedRectangle(cornerRadius: 25)
+//                                .fill(Color.gray)
+//                                .shadow(color: .gray, radius: 2, x: 0, y: 2)
+//                        )
+//                    }
                     
                     Spacer()
                 }
