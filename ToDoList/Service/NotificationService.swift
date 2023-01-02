@@ -89,17 +89,17 @@ class NotificationService: ObservableObject {
     func addNotification(with time: Date) {
         let content = UNMutableNotificationContent()
         
-        content.title = "Git 도우미"
-        content.subtitle = "커밋"
+        content.title = "깃포터".localized()
+        content.subtitle = "오늘 커밋 하셨나요?".localized()
         content.sound = UNNotificationSound.default
-        content.body = "Content Body"
+//        content.body = "Content Body"
         
         print("addNotificationTime: \(time)")
         let dateComponent = Calendar.current.dateComponents([.hour, .minute], from: time)
         print("dateComponent: \(dateComponent)")
-//        let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponent, repeats: true)
-        let trigger1 = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
-        let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger1)
+        let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponent, repeats: true)
+//        let trigger1 = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
+        let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
         
         notiCenter.add(request) { error in
             guard error == nil else { return }

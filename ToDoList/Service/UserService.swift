@@ -20,7 +20,7 @@ class UserService: ObservableObject {
     @Published var commits: [Commit] = []   // Commit 데이터
     @Published var isCommited: Bool = false // 커밋을 했는지 확인하는 여부
     @Published var commitHistory: [String:Int] = ["today": 0,   // 오늘 커밋
-                                                  "thisYear": 0,    // 올해 커밋
+                                                  "thisYear": 0,    // 일년간 커밋
                                                   "continuous": 0]  // 연속 커밋
     
     @Published var isLogin: Bool = false    // 로그인 상태 확인 여부

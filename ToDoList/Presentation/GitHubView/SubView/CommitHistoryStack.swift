@@ -13,7 +13,7 @@ struct CommitHistoryStack: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 10.0) {
-            Text("커밋 기록")
+            Text("커밋 기록".localized())
                 .font(.headline)
                 .fontDesign(.rounded)
                 .padding(EdgeInsets(top: 0.0, leading: 12.0, bottom: 0.0, trailing: 0.0))
@@ -25,8 +25,8 @@ struct CommitHistoryStack: View {
                         .aspectRatio(contentMode: .fit)
                         .frame(width: 50.0, height: 50.0)
                         .padding()
-                    Text("\(userService.commitHistory["today"] ?? 0)개")
-                    Text("오늘")
+                    Text("%d개".localized(with: userService.commitHistory["today"] ?? 0))
+                    Text("오늘".localized())
                 }
                 
                 VStack(alignment: .center, spacing: 5.0) {
@@ -37,8 +37,8 @@ struct CommitHistoryStack: View {
 //                        .clipShape(Circle())
 //                        .border(.blue)
                         .padding()
-                    Text("\(userService.commitHistory["thisYear"] ?? 0)개")
-                    Text("올해")
+                    Text("%d개".localized(with: userService.commitHistory["thisYear"] ?? 0))
+                    Text("일년".localized())
                 }
                 VStack(alignment: .center, spacing: 5.0) {
                     Image(systemName: "flame.fill")
@@ -49,8 +49,8 @@ struct CommitHistoryStack: View {
                         .padding()
 //                        .clipShape(Circle())
 //                        .border(.blue)
-                    Text("\(userService.commitHistory["continues"] ?? 0)일")
-                    Text("연속")
+                    Text("%d일".localized(with: userService.commitHistory["continues"] ?? 0))
+                    Text("연속".localized())
                 }
             }
         }

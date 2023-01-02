@@ -27,18 +27,18 @@ struct LoginView: View {
     
     private var logoLabel: some View {
         HStack {
-            Text("Commit")
+            Text("Git")
                 .fontWeight(.bold)
-            Text("Helper")
+            Text("Supportter")
         }
     }
     
     private var contentLabel: some View {
         VStack {
-            Text("안녕하세요!")
+            Text("안녕하세요!".localized())
                 .padding()
-            Text("깃허브 정보를 이용하기 위해")
-            Text("깃허브 로그인을 해주세요!")
+            Text("깃허브 정보를 이용하기 위해".localized())
+            Text("깃허브 로그인을 해주세요!".localized())
         }
     }
     
@@ -47,7 +47,7 @@ struct LoginView: View {
         Link(destination: loginViewModel.login()) {
             HStack {
                 Image(systemName: "person.fill")
-                Text("GitHub Login")
+                Text("깃허브 로그인".localized())
             }
             .onOpenURL(perform: { url in
                 self.loadingIndicator = true
@@ -79,7 +79,7 @@ struct LoginView: View {
     var body: some View {
         ZStack {
             if loadingIndicator {
-                ProgressView("유저 정보 확인중...", value: loadingAmount, total: 100)
+                ProgressView("유저 정보 확인중...".localized(), value: loadingAmount, total: 100)
                     .backgroundStyle(Color("SubViewBackground"))
                     .shadow(color: Color("ShadowColor"), radius: 1, x: 1, y: 1)
                     .frame(maxWidth: 250)

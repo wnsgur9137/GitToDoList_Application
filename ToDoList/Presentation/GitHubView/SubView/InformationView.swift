@@ -13,7 +13,7 @@ struct InformationView: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 10.0) {
-            Text("정보")
+            Text("정보".localized())
                 .font(.headline)
                 .fontDesign(.rounded)
                 .padding(EdgeInsets(top: 0.0, leading: 12.0, bottom: 0.0, trailing: 0.0))
@@ -25,8 +25,8 @@ struct InformationView: View {
                         .aspectRatio(contentMode: .fit)
                         .frame(width: 50.0, height: 50.0)
                         .padding()
-                    Text("\(userService.userInfo.publicRepos)개")
-                    Text("리파지토리")
+                    Text("%d개".localized(with: userService.userInfo.publicRepos))
+                    Text("리파지토리".localized())
                         .multilineTextAlignment(.center)
                 }
                 
@@ -39,8 +39,8 @@ struct InformationView: View {
 //                        .border(.blue)
                         .padding()
                         .cornerRadius(30.0)
-                    Text("\(userService.userInfo.followers)명")
-                    Text("팔로워")
+                    Text("%d명".localized(with: userService.userInfo.followers))
+                    Text("팔로워".localized())
                 }
                 VStack(alignment: .center, spacing: 5.0) {
                     Image(systemName: "heart")
@@ -51,8 +51,8 @@ struct InformationView: View {
                         .padding()
 //                        .clipShape(Circle())
 //                        .border(.blue)
-                    Text("\(userService.userInfo.following)명")
-                    Text("팔로우")
+                    Text("%d명".localized(with: userService.userInfo.following))
+                    Text("팔로잉".localized())
                 }
             }
         }

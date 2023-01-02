@@ -21,9 +21,9 @@ enum TabType: Int, CaseIterable {
     var tabItem: TabBarModel {
         switch self {
         case .github:
-            return TabBarModel(image: "square.and.arrow.up", selectedImage: "square.and.arrow.up.fill", title: "깃허브")
+            return TabBarModel(image: "square.and.arrow.up", selectedImage: "square.and.arrow.up.fill", title: "깃허브".localized())
         case .toDoList:
-            return TabBarModel(image: "calendar", selectedImage: "calendar", title: "캘린더")
+            return TabBarModel(image: "calendar", selectedImage: "calendar", title: "캘린더".localized())
 //        case .alarm:
 //            return TabBarModel(image: "alarm", selectedImage: "alarm.fill", title: "알람")
         }

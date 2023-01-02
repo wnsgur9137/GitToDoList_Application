@@ -17,23 +17,23 @@ struct GitSettingView: View {
     
     var body: some View {
         List {
-            Section(header: Text("UserInfo")) {
+            Section(header: Text("유저 정보".localized())) {
                 Text("\(userService.userInfo.name)")
                     .font(.headline)
                     .fontDesign(.rounded)
-                Text("Email: \(userService.userInfo.email ?? "등록된 이메일이 없어요")")
-                Text("Repository: \(userService.userInfo.publicRepos)개")
-                Button("로그아웃") {
+                Text("이메일: %@".localized(with: userService.userInfo.email ?? "등록된 이메일이 없어요".localized()))
+                Text("리파지토리: %d개".localized(with: userService.userInfo.publicRepos))
+                Button("로그아웃".localized()) {
                     logoutTapped = !logoutTapped
                 }
                 .tint(.red)
                 .font(.headline)
                 .alert(isPresented: $logoutTapped) {
                     Alert(
-                        title: Text("로그아웃 하시겠습니까?"),
+                        title: Text("로그아웃 하시겠습니까?".localized()),
                         message: nil,
-                        primaryButton: .default(Text("아니오")),
-                        secondaryButton: .destructive(Text("예"), action: {
+                        primaryButton: .default(Text("아니오".localized())),
+                        secondaryButton: .destructive(Text("예".localized()), action: {
                             loadingService.isLoading = false
                             userService.logout()
                             print("Logout")
@@ -41,33 +41,33 @@ struct GitSettingView: View {
                 }
             }
             
-            Section(header: Text("Notification")) {
+            Section(header: Text("알림".localized())) {
                 Toggle(isOn: $notificationService.isToggle) {
-                    Text("Notification")
+                    Text("알림".localized())
                 }
                 if notificationService.isToggle {
-                    DatePicker("Enter a time", selection: $notificationService.notiTime,
+                    DatePicker("알림 시간".localized(), selection: $notificationService.notiTime,
                                displayedComponents: .hourAndMinute)
-                        .environment(\.locale, Locale.init(identifier: "ko_KR"))
+//                        .environment(\.locale, Locale.init(identifier: "ko_KR"))
                         .environment(\.timeZone, TimeZone(abbreviation: "KST")!)
 //                    Text("\(notificationService.notiTime)")
 //                    Text("\(date)")
                 }
             }
             
-            Section(header: Text("commit Info")) {
-                Text("Today: \(userService.commitHistory["today"] ?? 0)개")
-                Text("ThisYear: \(userService.commitHistory["thisYear"] ?? 0)개")
-                Text("Continues: \(userService.commitHistory["continues"] ?? 0)일")
+            Section(header: Text("커밋 정보".localized())) {
+                Text("오늘: %d개".localized(with: userService.commitHistory["today"] ?? 0))
+                Text("일년: %d개".localized(with: userService.commitHistory["thisYear"] ?? 0))
+                Text("연속: %d일".localized(with: userService.commitHistory["continues"] ?? 0))
             }
             
-            Section(header: Text("Follow Info")) {
-                Text("Followers: \(userService.userInfo.followers)")
-                Text("Following: \(userService.userInfo.following)")
+            Section(header: Text("팔로우 정보".localized())) {
+                Text("팔로워: %d명".localized(with: userService.userInfo.followers))
+                Text("팔로잉: %d명".localized(with: userService.userInfo.following))
             }
         }
         .listStyle(GroupedListStyle())
-        .navigationTitle("Git Setting")
+        .navigationTitle("깃 설정".localized())
 //        .alert(isPresented: $notificationService.isAlertOccurred) {
 //            Alert(
 //                title: Text("설정되지 않음"),

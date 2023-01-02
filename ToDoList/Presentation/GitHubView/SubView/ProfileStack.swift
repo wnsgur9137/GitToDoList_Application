@@ -15,7 +15,7 @@ struct ProfileStack: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 10.0) {
             
-            Text("\(userService.userInfo.name)님")
+            Text("%@ 님".localized(with: userService.userInfo.name))
                 .font(.headline)
                 .fontDesign(.rounded)
                 .padding(EdgeInsets(top: 0.0, leading: 12.0, bottom: 0.0, trailing: 0.0))
@@ -31,13 +31,13 @@ struct ProfileStack: View {
                     Text("\(userService.userInfo.name)")
                         .frame(width: 210.0, alignment: .leading)
                         .font(.headline)
-                    Text("\(userService.userInfo.email ?? "등록된 이메일이 없어요")")
+                    Text("\(userService.userInfo.email ?? "등록된 이메일이 없어요".localized())")
                         .frame(width: 210.0, alignment: .leading)
                     if userService.isCommited {
-                        Text("오늘 커밋을 완료했어요!")
+                        Text("오늘 커밋을 완료했어요!".localized())
                             .foregroundColor(.green)
                     } else {
-                        Text("오늘 커밋을 하지 않았어요!")
+                        Text("오늘 커밋을 하지 않았어요!".localized())
                             .foregroundColor(.red)
                     }
                 }

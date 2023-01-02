@@ -27,7 +27,7 @@ struct GitHubView: View {
             VStack {
                 Text("reflash: \(reflash)")
                     .hidden()
-                Text("userdefaults: \(UserDefaults.standard.string(forKey: "userID") ?? "없음")")
+                Text("userdefaults: \(UserDefaults.standard.string(forKey: "userID") ?? "알 수 없음".localized())")
                     .hidden()
                 LoginView(reflash: $reflash)
             }
@@ -63,7 +63,7 @@ struct GitHubView: View {
                             .hidden()
                         
                     } /// VStack
-                    .navigationTitle("GitHub")
+                    .navigationTitle("Gitpportter")
                     .navigationBarItems(
                         trailing: NavigationLink(
                             destination: GitSettingView(),
