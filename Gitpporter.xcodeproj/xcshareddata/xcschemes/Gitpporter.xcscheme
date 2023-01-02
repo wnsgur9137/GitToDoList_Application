@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "13285D54682BEAD805960F9E6EEB9949"
-               BuildableName = "FSCalendar.framework"
-               BlueprintName = "FSCalendar"
-               ReferencedContainer = "container:Pods.xcodeproj">
+               BlueprintIdentifier = "66A30B662949490300146003"
+               BuildableName = "Gitpporter.app"
+               BlueprintName = "Gitpporter"
+               ReferencedContainer = "container:Gitpporter.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -40,6 +40,16 @@
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
       allowLocationSimulation = "YES">
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "66A30B662949490300146003"
+            BuildableName = "Gitpporter.app"
+            BlueprintName = "Gitpporter"
+            ReferencedContainer = "container:Gitpporter.xcodeproj">
+         </BuildableReference>
+      </BuildableProductRunnable>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
@@ -47,6 +57,16 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "66A30B662949490300146003"
+            BuildableName = "Gitpporter.app"
+            BlueprintName = "Gitpporter"
+            ReferencedContainer = "container:Gitpporter.xcodeproj">
+         </BuildableReference>
+      </BuildableProductRunnable>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">
