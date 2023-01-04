@@ -19,7 +19,7 @@ struct LoginView: View {
     private let timer = Timer.publish(every: 0.1, on: .main, in: .common).autoconnect()
     
     private var logoImage: some View {
-        Image(systemName: "apple.logo")
+        Image("icon")
             .resizable()
             .aspectRatio(contentMode: .fit)
             .frame(width: 80.0, height: 80.0)
