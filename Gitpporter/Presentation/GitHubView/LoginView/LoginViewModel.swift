@@ -32,14 +32,6 @@ class LoginViewModel: ObservableObject {
             URLQueryItem(name: "scope", value: scope),
         ]
         return components.url!
-        
-//        var urlString = "https://github.com/login/oauth/authorize"
-//        let urlQuery = "?client_id=\(self.clientID)&scope=\(scope)"
-//        urlString += urlQuery
-//        if let url = URL(string: urlString), UIApplication.shared.canOpenURL(url) {
-//            UIApplication.shared.open(url)
-//            // redirect to scene(_:openURLContexts:) if user authorized
-//        }
     }
     
     func requestAccessToken(with code: String) {
@@ -102,53 +94,5 @@ class LoginViewModel: ObservableObject {
                     print("requestAccessToken Error: \(error)")
                 }
             })
-//            .responseJSON { [weak self] (response) in
-//                switch response.result {
-//                case let .success(json):
-//                    if let dic = json as? [String: String] {
-//                        let accessToken = dic["access_token"] ?? ""
-//                        print("dic: \(dic)")
-//                        KeychainSwift().set(accessToken, forKey: "accessToken")
-//                        self?.getUserInfo()
-//                    }
-//                case let .failure(error):
-//                    print("requestAccessToken Error: \(error)")
-//                }
-//            }
     }
-    
-//    func getUserInfo() {
-//        print("123123123")
-//        let url = "https://api.github.com/user"
-//        let accessToken = KeychainSwift().get("accessToken") ?? ""
-//        print(accessToken)
-//        let headers: HTTPHeaders = [
-//            "Accept": "application/vnd.github.v3+json",
-//            "Authorization": "token \(accessToken)"
-//        ]
-//        AF.request(url, method: .get, parameters: [:], headers: headers)
-//            .response(completionHandler: { (response) in
-//                switch response.result {
-//                case .success(let json):
-//                    do {
-//                        let result = try JSONDecoder().decode(UserInfoOverview.self, from: json!)
-//                        print("UserInfoJson: \(result)")
-//                        UserDefaults.standard.set(result.userId, forKey: "userID")
-//                    } catch {
-//                        print("getUserInfo JSON Parsing Error")
-//                    }
-//                case .failure(let error):
-//                    print("getUserInfo JSON Error: \(error)")
-//                }
-//
-//            })
-////            .responseJSON(completionHandler: { (response) in
-////                switch response.result {
-////                case .success(let json):
-////                    print(json as! [String: Any])
-////                case .failure:
-////                    print("getUserInfo JSON Error")
-////                }
-////            })
-//    }
 }

@@ -6,9 +6,12 @@
 //
 
 import SwiftUI
+import WebKit
 
 struct LoginView: View {
     
+    @State private var showSafari: Bool = false
+//    @State private var loginURL: URL
     @State private var loadingIndicator: Bool = false
     @State private var loadingAmount: Float = 0.0
     @Binding var reflash: Int
@@ -42,6 +45,7 @@ struct LoginView: View {
         }
     }
     
+    /// Safari 앱을 실행시켜서 로그인(심사로 인해 사용 안함)
     private var loginButton: some View {
         
         Link(destination: loginViewModel.login()) {
@@ -67,7 +71,6 @@ struct LoginView: View {
                     loadingAmount += 5
                 }
             }
-            
             .font(.system(size:20))
             .padding()
             .foregroundColor(.white)
@@ -76,7 +79,46 @@ struct LoginView: View {
         }
     }
     
+    // SFSafariViewController(SafariService 활용 로그인)
+    private var safariViewButton: some View {
+        HStack {
+            Image(systemName: "person.fill")
+            Text("깃허브 로그인".localized())
+        }
+        .onTapGesture {
+            print("onTapGesture")
+            showSafari.toggle()
+        }
+        .fullScreenCover(isPresented: $showSafari, content: {
+            LoginSafariView(url: loginViewModel.login())
+        })
+        .onOpenURL(perform: { url in
+            self.loadingIndicator = true
+            let code = url.absoluteString.components(separatedBy: "code=").last ?? ""
+            loginViewModel.requestAccessToken(with: code)
+            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 3) {
+                loadingService.isLoading = true
+                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5) {
+                    reflash += 1
+                    self.loadingIndicator = false
+                }
+            }
+            notificationService.isToggle = true
+        })
+        .onReceive(self.timer) { _ in
+            if (self.loadingIndicator) && (loadingAmount < 100) {
+                loadingAmount += 5
+            }
+        }
+        .font(.system(size:20))
+        .padding()
+        .foregroundColor(.white)
+        .background(Color.green)
+        .cornerRadius(40.0)
+    }
+    
     var body: some View {
+        NavigationView {
         ZStack {
             if loadingIndicator {
                 ProgressView("유저 정보 확인중...".localized(), value: loadingAmount, total: 100)
@@ -96,15 +138,23 @@ struct LoginView: View {
                 Spacer()
                 
                 VStack(alignment: .center, spacing: 40.0) {
+//                    NavigationLink(
+//                        destination: LoginWebView(url: URL(string: "https://findflag.kr")!)) {
+//                            Text("NavigationLink")
+//                        }
+                    
                     contentLabel
-                    loginButton
+                    safariViewButton
                         .disabled(self.loadingIndicator)
+//                    loginButton
+//                        .disabled(self.loadingIndicator)
                 }
                 
                 Spacer()
                     .frame(height: 100)
             }
         }
+    }
     }
 }
 
