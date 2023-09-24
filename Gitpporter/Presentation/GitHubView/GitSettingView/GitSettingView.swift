@@ -48,10 +48,7 @@ struct GitSettingView: View {
                 if notificationService.isToggle {
                     DatePicker("알림 시간".localized(), selection: $notificationService.notiTime,
                                displayedComponents: .hourAndMinute)
-//                        .environment(\.locale, Locale.init(identifier: "ko_KR"))
                         .environment(\.timeZone, TimeZone(abbreviation: "KST")!)
-//                    Text("\(notificationService.notiTime)")
-//                    Text("\(date)")
                 }
             }
             
@@ -68,17 +65,6 @@ struct GitSettingView: View {
         }
         .listStyle(GroupedListStyle())
         .navigationTitle("깃 설정".localized())
-//        .alert(isPresented: $notificationService.isAlertOccurred) {
-//            Alert(
-//                title: Text("설정되지 않음"),
-//                message: Text("설정으로 이동하시겠습니까?"),
-//                primaryButton: .default(Text("Cancel"), action: {
-//                    notificationService.isToggle = false
-//                }),
-//                secondaryButton: .cancel(Text("Go to Settings"), action: {
-//                    notificationService.isToggle = false
-//                    notificationService.openSettings()
-//                }))}
     }
 }
 
@@ -87,5 +73,3 @@ struct GitSettingView_Previews: PreviewProvider {
         GitSettingView()
     }
 }
-
-//                    .environment(\.timeZone, TimeZone(identifier: "KST") ?? <#default value#>)

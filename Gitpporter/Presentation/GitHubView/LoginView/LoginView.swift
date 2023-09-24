@@ -11,7 +11,6 @@ import WebKit
 struct LoginView: View {
     
     @State private var showSafari: Bool = false
-//    @State private var loginURL: URL
     @State private var loadingIndicator: Bool = false
     @State private var loadingAmount: Float = 0.0
     @Binding var reflash: Int
@@ -138,16 +137,9 @@ struct LoginView: View {
                 Spacer()
                 
                 VStack(alignment: .center, spacing: 40.0) {
-//                    NavigationLink(
-//                        destination: LoginWebView(url: URL(string: "https://findflag.kr")!)) {
-//                            Text("NavigationLink")
-//                        }
-                    
                     contentLabel
                     safariViewButton
                         .disabled(self.loadingIndicator)
-//                    loginButton
-//                        .disabled(self.loadingIndicator)
                 }
                 
                 Spacer()
@@ -157,9 +149,3 @@ struct LoginView: View {
     }
     }
 }
-
-//struct LoginView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        LoginView()
-//    }
-//}

@@ -17,7 +17,6 @@ struct MainView: View {
             let type = TabType(rawValue: index) ?? .toDoList
             getTabView(type: type)
         }
-//        .environmentObject(userService)
     }
     
     @ViewBuilder
@@ -27,8 +26,6 @@ struct MainView: View {
             GitHubView()
         case .toDoList:
             CalendarView()
-//        case .alarm:
-//            AlarmView()
         }
     }
 }

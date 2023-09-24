@@ -11,9 +11,7 @@ import Kingfisher
 
 struct ContributionView: View {
     @EnvironmentObject private var userService: UserService
-//    @EnvironmentObject var colorThemeService: ColorThemeService
     private let weekday = Calendar.current.component(.weekday, from: Date())
-//    private let width: CGFloat = uiSize.width * widthRatio.card - 20
     @Namespace var endID
     
     @ViewBuilder

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>LSEnvironment</key>
+	<dict>
+		<key>GITHUB_API_KEY</key>
+		<string>${GITHUB_API_KEY}</string>
+		<key>GITHUB_API_TOKEN</key>
+		<string>${GITHUB_API_TOKEN}</string>
+		<key>GITHUB_CLIENT_ID</key>
+		<string>${GITHUB_CLIENT_ID}</string>
+		<key>GITHUB_SECRETS</key>
+		<string>${GITHUB_CECRETS}</string>
+		<key>TREE_PATH</key>
+		<string>${TREE_PATH}</string>
+		<key>TREE_HOST</key>
+		<string>${TREE_HOST}</string>
+	</dict>
+	<key>Allow Arbitrary Loads</key>
+	<string>yes</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>GitToDoList</string>
+			</array>
+		</dict>
+	</array>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowArbitraryLoads</key>
+		<true/>
+	</dict>
+</dict>
+</plist>

@@ -8,7 +8,6 @@
 import Foundation
 import SwiftUI
 import SwiftSoup
-//import WidgetKit
 import KeychainSwift
 import Alamofire
 
@@ -67,9 +66,7 @@ class UserService: ObservableObject {
     /// 초기화
     init() {
         self.userID = UserDefaults.standard.string(forKey: "userID") ?? ""
-//        self.accessToken = KeychainSwift().get("accessToken") ?? "없음"
         self.accessToken = UserDefaults.standard.string(forKey: "accessToken") ?? ""
-//        self.getUserInfo()
     }
     
     /// 유저 정보를 받아온다.
@@ -81,7 +78,6 @@ class UserService: ObservableObject {
         let headers: HTTPHeaders = [
             "Accept": "application/vnd.github.v3+json",
             "Authorization": "token \(accessToken)"
-//                            "Authorization": "token \(APIKeys.token)"
         ]
         AF.request(url, method: .get, parameters: [:], headers: headers)
             .response(completionHandler: { [weak self] (response) in
@@ -106,15 +102,12 @@ class UserService: ObservableObject {
         self.userID = UserDefaults.standard.string(forKey: "userID") ?? ""
         Task{@MainActor in
             let urlAddress = "https://github.com/users/\(self.userID)/contributions"
-//            print("urlAddress: \(urlAddress)")
             guard let url = URL(string: urlAddress) else { return }
             do {
                 let html = try String(contentsOf: url, encoding: .utf8)
                 let parsedHtml = try SwiftSoup.parse(html)
                 let dailyContribution = try parsedHtml.select("rect")
                 let thisYearContribution = try parsedHtml.getElementsByClass("f4 text-normal mb-2").text().split(separator: " ")[0]
-                
-//                var test = 0
 
                 commits = dailyContribution
                     .compactMap({ element -> (String, String, String) in
@@ -131,15 +124,10 @@ class UserService: ObservableObject {
                         let date = dateString.toDate() ?? Date()
                         let level = Int(levelString) ?? 0
                         let count = Int(countString) ?? 0
-                        
-//                        print("\(test): \(Commit(date: date, level: level, count: count))")
-//                        test+=1
-
                         return Commit(date: date, level: level, count: count)
                     })
 
                 if commits.last!.date.isToday && commits.last!.level > 0 {
-//                    self.hasCommitted = emoji.committed.rawValue
                     self.isCommited = true
                 } else {
                     self.isCommited = false
@@ -170,7 +158,6 @@ class UserService: ObservableObject {
             }
             catch {
                 print("Cannot Get Data: \(error.localizedDescription)")
-//                fatalError("Cannot Get Data: \(error.localizedDescription)")
             }
         }
     }
