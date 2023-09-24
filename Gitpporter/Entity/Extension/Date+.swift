@@ -50,18 +50,8 @@ extension Date {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "HH:mm:ss"
         dateFormatter.locale = Locale(identifier: "ko_KR")
-//        dateFormatter.timeZone = TimeZone(identifier: "UTC")
         
         let formattedString = dateFormatter.string(from: self)
         return DateFormatter().date(from: formattedString) ?? self
     }
 }
-
-
-
-
-//print("----------------")
-//print(UserDefaults.standard.string(forKey: "notiTime") ?? Date())
-//print(UserDefaults.standard.string(forKey: "notiTime")?.toNotificationTime() ?? Date())
-//print("notiTime: \(notiTime)")
-//print("notiTime_ko_KR: \(notiTime.toNotificationTime)")

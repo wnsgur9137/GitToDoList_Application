@@ -35,8 +35,6 @@ struct InformationView: View {
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .frame(width: 50.0, height: 50.0)
-//                        .clipShape(Circle())
-//                        .border(.blue)
                         .padding()
                         .cornerRadius(30.0)
                     Text("%d명".localized(with: userService.userInfo.followers))
@@ -49,8 +47,6 @@ struct InformationView: View {
                         .frame(width: 50.0, height: 50.0)
                         .foregroundColor(.pink)
                         .padding()
-//                        .clipShape(Circle())
-//                        .border(.blue)
                     Text("%d명".localized(with: userService.userInfo.following))
                     Text("팔로잉".localized())
                 }

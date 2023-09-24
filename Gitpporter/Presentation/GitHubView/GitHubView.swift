@@ -47,8 +47,6 @@ struct GitHubView: View {
                                 minHeight: 160.0, maxHeight: 300.0
                             )
                         
-//                        ChallengeStack()
-                        
                         ContributionView()
                         
                         InformationView()
@@ -74,7 +72,6 @@ struct GitHubView: View {
                         )
                     )
                 } /// ScrollView
-    //            .background(Color.green)
                 .background(LinearGradient(gradient: Gradient(colors: [Color("BackgroundColor1"), Color("BackgroundColor2")]), startPoint: .top, endPoint: .bottom))
             } /// NavigationView
             .onAppear {

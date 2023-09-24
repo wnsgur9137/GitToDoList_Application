@@ -61,7 +61,6 @@ class LoginViewModel: ObservableObject {
                         let headers: HTTPHeaders = [
                             "Accept": "application/vnd.github.v3+json",
                             "Authorization": "token \(accessToken)"
-//                            "Authorization": "token \(APIKeys.token)"
                         ]
                         AF.request(url, method: .get, parameters: [:], headers: headers)
                             .response(completionHandler: { (response) in
@@ -78,14 +77,6 @@ class LoginViewModel: ObservableObject {
                                 }
 
                             })
-//                            .responseJSON(completionHandler: { (response) in
-//                                switch response.result {
-//                                case .success(let json):
-//                                    print(json as! [String: Any])
-//                                case .failure:
-//                                    print("getUserInfo JSON Error")
-//                                }
-//                            })
                         
                     } catch {
                         print("requestAccessToken Error:")

@@ -34,9 +34,3 @@ struct CustomTabView<Content: View>: View {
         }
     }
 }
-
-//struct CustomTabView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        CustomTabView()
-//    }
-//}
